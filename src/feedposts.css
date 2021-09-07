@@ -1,0 +1,248 @@
+/* =============== FEED POSTS ============== */
+a {
+  color: black !important;
+}
+
+.post-card{
+  padding: 12px 12px 3px 12px!important;
+}
+.post-user-info {
+  display: flex;
+  margin-bottom: 5px;
+}
+.post-profile-img {
+    height: 45px;
+    width: 45px;
+    overflow: hidden;
+    display: inline;
+}
+
+.post-profile-img img {
+    padding: 0.3rem;
+    border-radius: 50%;
+    height: 45px;
+    width: 45px;
+    padding: 0; 
+}
+.fragment-info-post {
+  display: inline;
+  margin: 0;
+  padding-top: 0;
+  position: relative;
+  top: -2px;
+}
+.post-user-name {
+  display: inline;
+  font-size: 14.5px;
+}
+.post-job-descriptor {
+  text-decoration: none !important;
+  padding: 0;
+  font-size: 11.5px;
+  line-height: 12.2px;
+  margin: 0 0 10px 0;
+}
+
+.post-job-descriptor-details {
+  text-decoration: none !important;
+  padding: 0;
+  font-size: 11.5px;
+  line-height: 18px;
+  margin: 0 0 10px 0;
+}
+
+.post-action {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 2%;
+}
+
+.post-action:hover {
+  background-color: #66666625;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.post-action-container {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  
+}
+
+.post-action-icon {
+  
+}
+.post-action-descriptor {
+  margin: 0 5px !important;
+}
+
+.user-post {
+  line-height: 18px;
+}
+
+.user-post-image {
+  margin: 10px 0;
+  border-radius: 3px;
+  overflow: hidden;
+  object-fit: cover;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+div.prov-width {
+    margin: auto;
+    width: 40rem;
+}
+
+div.all-posts-container {
+    width: 100%;
+}
+
+div.row.post-name-and-edit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+div.col-3.post-name {
+    padding: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #000000e6;
+}
+
+
+div.col-3.post-name:hover,
+div.post-show-more span:hover {
+    color: #0a66c2;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+div.post-edit {
+    color: #666666;
+    text-align: center;
+}
+
+div.post-edit svg:hover {
+    background-color: #66666623;
+    border-radius: 50%;
+}
+
+div.row.post-followers,
+div.row.post-time {
+    color: #00000099;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+}
+
+div.row.post-time svg {
+    margin-left: 0.1rem;
+}
+
+div.post-body p {
+    color: #000000e6;
+    font-size: 0.9rem;
+}
+
+div.post-body p.clamp {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+div.post-show-more {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+div.row.post-buttons-container {
+    color: #666666;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0.2rem 1rem;
+    align-items: center;
+}
+
+div.row.post-buttons-container span {
+    font-size: 0.9rem;
+    color: #666666;
+    font-weight: 400;
+}
+
+div.col-1 {
+    padding: 0.2rem !important;
+}
+
+
+.post-like,
+.post-comment,
+.post-share,
+.post-send {
+    padding: 0.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+}
+
+.post-like span,
+.post-comment span,
+.post-share span,
+.post-send span {
+    margin-bottom: 0 !important;
+    display: flex;
+    align-items: center;
+    padding-left: 0.5rem;
+}
+
+.post-like:hover,
+.post-comment:hover,
+.post-share:hover,
+.post-send:hover {
+    background-color: #66666625;
+    border-radius: 5px;
+}
+
+.post-comment-img {
+    width: 15%;
+}
+
+.post-textarea {
+    width: 85%;
+}
+
+.post-comment-area img {
+    width: 3rem !important;
+}
+
+textarea.form-control.post-comment-textarea {
+    border-radius: 20px;
+}

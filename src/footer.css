@@ -1,0 +1,290 @@
+/* ============= FOOTER ============= */
+
+footer {
+    width: 100%;
+    height: 220px;
+    padding: 2rem 2rem;
+    margin: 1rem 0;
+}
+
+div.row.footer-logo {
+    width: 100%;
+    height: 2rem;
+    margin-bottom: 10px;
+}
+
+div.row.footer-logo img {
+    height: 1.5rem;
+}
+
+footer div.col-md-2 {
+    padding: 0;
+}
+
+footer p {
+    line-height: 24px;
+}
+
+footer p,
+span,
+label {
+    font-size: 12px;
+    margin-bottom: 0.6rem !important;
+    color: #00000099;
+    font-weight: 600;
+}
+
+footer p:hover {
+    color: #0a66c2;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+footer h6:hover {
+    color: #0a66c2;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+footer h6 {
+    font-size: 14px;
+    margin: 0;
+}
+
+span.copyright {
+    font-weight: 400;
+}
+
+footer svg {
+    color: #00000099;
+}
+
+footer select {
+    width: 100%;
+    height: 2rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    background-color: #f3f2ee;
+    color: #00000099;
+    border: 1px solid #00000099;
+    border-radius: 5px;
+}
+
+footer select:hover {
+    border: 2px solid #00000099;
+}
+
+footer select:focus {
+    border: none;
+    box-shadow: 0 0 5px #0a66c2;
+}
+
+footer select:focus-visible {
+    outline: none;
+    border: none;
+    box-shadow: 0 0 5px #0a66c2;
+}
+
+footer select option {
+    background-color: white;
+}
+
+footer a.dropdown-item {
+    padding: 5px 10px;
+    font-size: 12px;
+    color: #00000099;
+    font-weight: 500;
+}
+
+footer button#dropdown-basic {
+    background-color: #f3f2ee;
+    color: #00000099;
+    font-size: 12px;
+    margin-bottom: 0.7rem;
+    font-weight: 600;
+    border: none;
+    padding: 0;
+}
+
+footer button#dropdown-basic:hover {
+    color: #0a66c2;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+footer button#dropdown-basic:focus {
+    box-shadow: none;
+}
+
+footer div.dropdown {
+    display: flex;
+    align-items: baseline;
+}
+
+button.dropdown-toggle.btn.btn-success#dropdown-basic {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: 18px !important;
+    margin-bottom: 0.6rem !important;
+}
+
+
+/* =================== MODAL ================ */
+
+div.modal-content {
+    height: 80vh;
+    width: 90%;
+    margin: auto;
+    position: relative;
+}
+
+div.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+div.modal-body {
+    overflow: scroll;
+    padding-bottom: 3.2rem;
+}
+
+button.close span {
+    font-size: 2rem;
+}
+
+button.close {
+    padding: 0 !important;
+}
+
+label.form-label {
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+p.under-text {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: #00000099;
+}
+
+p.learn-more {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0a7dd3;
+}
+
+p.learn-more:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+div.form-group select {
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    height: 2rem;
+    color: #495057;
+}
+
+select.start,
+select.end {
+    width: 50%;
+}
+
+input.form-check-input {
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+label.form-check-label {
+    margin-left: 0.5rem;
+}
+
+
+/* feed sidebars */
+
+.siderbarcover {
+    height: 54px;
+    background-size: cover;
+    background-position: center;
+    border-top-left-radius: 11px;
+    border-top-right-radius: 11px;
+}
+
+hr {
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+.leftSidebarCardBody a:hover {
+    background-color: #ced4da;
+}
+
+.hastags {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.hastags li {
+    line-height: 20px;
+}
+
+.hastags li span {
+    padding-left: 10px;
+    font-weight: 500;
+}
+
+.sidebarProfilePhoto {
+    height: 64px;
+    width: 64px;
+    position: absolute;
+    border: 2px solid white;
+}
+
+.card-footer {
+    padding: 0.75rem 1.25rem;
+    background-color: rgb(255 255 255 / 3%);
+    border-top: 1px solid rgb(255 255 255 / 13%);
+}
+
+.topCourseList {
+    list-style: none;
+    padding-left: 0px;
+}
+
+.topCourseList li a {
+    color: black;
+    font-weight: 500;
+}
+
+.topCourseList li a span {
+    display: block;
+}
+
+.topCourseList li a:hover {
+    text-decoration: none;
+}
+
+.topCourseList li:hover {
+    background-color: lightgray;
+}
+
+.sidebarFooter {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    padding-left: 5px;
+}
+
+.sidebarFooter li {
+    display: flex;
+    margin: 0rem 0.5rem;
+}
+
+.sidebarFooter li a {
+    color: #6c757d !important;
+}

@@ -1,0 +1,30 @@
+.post-input {
+  cursor: pointer;
+}
+.icons {
+  font-size: larger;
+}
+.privacy-icons {
+  font-size: x-large;
+}
+.list-group-item:hover {
+  background-color: #f3f2ee;
+  cursor: pointer;
+}
+div .modal-content {
+  height: 40% !important;
+}
+.profile-info {
+  font-weight: 500;
+}
+.privacy-opt {
+  font-size: 10px;
+  font-weight: lighter;
+}
+.privacy-para {
+  font-size: 12px;
+  font-weight: 600;
+}
+.post-para {
+  font-size: 11px;
+}
