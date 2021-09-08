@@ -148,7 +148,7 @@ const MainSection = () => {
               </Row>
             
             </Card.Body>
-            <a href="">
+            <a>
               <Card.Footer className="text-center card-footer text-muted text-decoration-none font-weight-bold">
               See all activity
               </Card.Footer>

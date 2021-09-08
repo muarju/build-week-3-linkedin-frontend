@@ -15,6 +15,7 @@ body {
     height: 20rem;
     margin: auto;
 }
+
 .profile-spacer-div {
     height: 1rem;
 }
@@ -433,9 +434,17 @@ hr {
     margin-right: -20px;
 }
 
+/* L E F T    S I D E B A R  */
+
 .leftSidebarCardBody a:hover {
     background-color: #ced4da;
 }
+
+.leftSidebarCardBody img {
+    object-fit: cover;
+}
+
+
 
 .hastags {
     list-style: none;
