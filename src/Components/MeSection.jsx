@@ -13,16 +13,17 @@ import faker from "faker";
 
 
 const MainSection = () => {
+  
   const [profileData, setProfileData] = useState("");
-
+  const id=localStorage.getItem('id');
+  const accesstoken=localStorage.getItem('accesstoken');
   const fetchData = async () => {
     try {
-      console.log(`Bearer ${process.env.REACT_APP_API_KEY}`)
       let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/profile/me",
+        `${process.env.REACT_APP_API_URL}/profile/${id}`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+            authentication: `${accesstoken}`
           },
         }
       );
