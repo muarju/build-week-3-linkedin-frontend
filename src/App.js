@@ -1,7 +1,8 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
+import axios from "axios";
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, useHistory } from 'react-router-dom'
 import MeSection from './Components/MeSection'
 import TopNav from './Components/TopNav'
 import ProfileSection from './Components/ProfileSection'
@@ -10,42 +11,21 @@ import SignIn from './Components/SignIn'
 
 
 function App() {
-  let [user, setUser] = useState(null)
-  
-  const userSignIn = (e, userData) => {
-    e.preventDefault()
-    console.log("calling user sign in!")
-    console.log("USER DATA APP API:", userData.API)
-    
-    let APIKEY = `Bearer ${userData.API}`
-    console.log(APIKEY)
-    
-    fetch(`https://striveschool-api.herokuapp.com/api/profile/me`, {
-      headers: {
-        Authorization:APIKEY
-      }
-    })
-    .then(res => res.json())
-    .then(data => {
-      setUser(data)
-    })
-  }
-  
   return (
     <>
       <Router>
         <div className="App">
           <TopNav />
           <Route exact path="/signin" render={(routerProps) => (
-            <SignIn fetchUser={userSignIn} {...routerProps} />
+            <SignIn />
           )} />
           <Route exact path="/profile/:id" render={routerProps => (
-            <ProfileSection {...routerProps} user={user}/> 
+            <ProfileSection {...routerProps}/> 
           )} />
-          <Route exact path="/" render={(routerProps) => <FeedMain user={user}/> } />
-          <Route exact path="/home" component={<FeedMain user={user}/>} />
-          <Route exact path="/feed" render={(routerProps) => <FeedMain user={user}/> } />          
-          <Route exact path="/me" render={(routerProps) => <MeSection user={user}/> } />
+          <Route exact path="/" render={(routerProps) => <FeedMain /> } />
+          <Route exact path="/home" component={<FeedMain />} />
+          <Route exact path="/feed" render={(routerProps) => <FeedMain /> } />          
+          <Route exact path="/me" render={(routerProps) => <MeSection/> } />
          
         </div>
       </Router>

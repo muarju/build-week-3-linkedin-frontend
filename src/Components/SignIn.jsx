@@ -1,16 +1,33 @@
-import React, { Component } from 'react'
+import React, { Component,useState } from 'react'
 import { Form, Button} from 'react-bootstrap'
+import axios from 'axios'
+import { useHistory } from 'react-router-dom';
 
-export default class SignIn extends Component {
-	state = {
-    name: null,
-    API: null,
-    userData: null
+const SignIn =() => {
+  const [user, setUser] = useState({
+    email: "",
+    password: ""
+  });
+  const onInputChange = e => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+  const history = useHistory();
+  const onSubmit = async e => {
+    e.preventDefault();
+    const response= await axios.post(`${process.env.REACT_APP_API_URL}/profile/login/`,user);
+    const data=response.data
+    if(data==="authentication failed"){
+      console.log(data)
+    }else{
+      console.log(data)
+      localStorage.setItem('accesstoken', data.accesstoken);
+      localStorage.setItem('username', data.data.username);
+      localStorage.setItem('id', data.data._id);
+      history.push("/")
+    }
   }
-  
-  render() {
-    {console.log("this.state", this.state)}
-    {console.log("this.props", this.props)}
+
+   
 		return (
 			<div className="sign-in-screen">
         <div className="sign-in-form">
@@ -19,21 +36,21 @@ export default class SignIn extends Component {
           alt="LinkedIn"
           className="sign-in-logo" />
           <h4 className="sign-in-text">Welcome to your professional community.</h4>
-          <Form onSubmit={(e) => { this.props.fetchUser(e, this.state) }}>
+          <Form onSubmit={e => onSubmit(e)}>
             <Form.Group>
-              <Form.Label>Name:</Form.Label>
-              <Form.Control 
-                type="name" 
-                placeholder="LinkedIn Profile Name" 
-                onChange={(e) => this.setState({ name: e.target.value })}/>
+              <Form.Label>Email:</Form.Label>
+              <Form.Control name="email"
+                type="email" 
+                placeholder="Email" 
+                onChange={e => onInputChange(e)} />
             </Form.Group>
             
             <Form.Group>
-              <Form.Label>API Key (Password): </Form.Label >
-              <Form.Control 
+              <Form.Label>Password: </Form.Label >
+              <Form.Control name="password"
                 type="password" 
-                placeholder="API key here"
-                onChange={(e) => this.setState({ API: e.target.value })} />
+                placeholder="Password"
+                onChange={e => onInputChange(e)}  />
             </Form.Group>
             
             <Button variant="primary" type="submit" className="sign-in-button default-blue-bg">
@@ -44,4 +61,5 @@ export default class SignIn extends Component {
 			</div>
 		)
 	}
-}
+
+export default SignIn

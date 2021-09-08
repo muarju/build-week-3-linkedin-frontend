@@ -21,12 +21,14 @@ function ProfileSection(props) {
 	}, [])
 	
 	const fetchData = async () => {
+   const id=localStorage.getItem('id');
+   const accesstoken=localStorage.getItem('accesstoken');
 		console.log("fetching?")
 		let profileId = props.match.params.id
 		try {
-      let response = await fetch( `https://striveschool-api.herokuapp.com/api/profile/${profileId}`, {
+      let response = await fetch( `${process.env.REACT_APP_API_URL}/profile/${profileId}`, {
         headers: { 
-					Authorization:  `Bearer ${process.env.REACT_APP_API_KEY}`
+					authorization:  `${accesstoken}`
         },
       });
 			

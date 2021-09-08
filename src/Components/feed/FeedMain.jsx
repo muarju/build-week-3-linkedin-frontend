@@ -8,7 +8,9 @@ import NewPost from "./NewPost";
 
 
 class FeedMain extends Component {
+ 
   render() {
+    console.log('FeedMain', this.props.user)
     return (
       <div>
         <Container>

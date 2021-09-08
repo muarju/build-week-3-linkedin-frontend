@@ -2,28 +2,29 @@ import React from 'react'
 import {Card} from 'react-bootstrap'
 import { useState, useEffect } from "react";
 import cover from "../../assets/cover.jpg";
+import axios from 'axios'
 
 export default function FeedSidebarProfile(props) {
   const [profileData, setProfileData] = useState("");
-
+  const id=localStorage.getItem('id');
+  const accesstoken=localStorage.getItem('accesstoken');
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let response = await fetch(
-          "https://striveschool-api.herokuapp.com/api/profile/me",
-          {
-            headers: {
-              Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
-            },
+
+        const response = await axios.get( `${process.env.REACT_APP_API_URL}/profile/${id}`,{
+          headers: {
+          'Content-Type': 'application/json',
+          'authentication':  `${accesstoken}`
           }
-        );
-        if (response.ok) {
-          let resp = await response.json();
-          setProfileData(resp);
-          console.log("fetch", resp);
-        } else {
+        })
+        if(response){
+          setProfileData(response.data)
+          console.log(response.data)
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error)
+      }
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
