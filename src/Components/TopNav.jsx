@@ -1,13 +1,4 @@
-import {
-    Container,
-    Row,
-    Col,
-    Image,
-    Nav,
-    Navbar,
-    Form,
-    FormControl,
-  } from "react-bootstrap";
+import { Container, Row, Col,Image,Nav,Navbar,Form,FormControl, Dropdown} from "react-bootstrap";
   import { SiLinkedin } from "react-icons/si";
   import { TiHome, TiMessageTyping } from "react-icons/ti";
   import { BsFillPeopleFill, BsThreeDots } from "react-icons/bs";
@@ -17,9 +8,19 @@ import {
   import { MdWork } from "react-icons/md";
   import "../nav.css";
   import { useEffect, useState } from "react";
+  import { useHistory } from "react-router";
   
   const TopNav = () => {
+    const history=useHistory()
+    const avatar= localStorage.getItem('avatar');
+    const token= localStorage.getItem('accesstoken');
     const [scrolled,setScrolled]=useState(false);
+
+    if(token){
+
+    }else{
+      history.push("/signin");
+    }
     const handleScroll=() => {
         const offset=window.scrollY;
         if(offset > 200 ){
@@ -58,7 +59,6 @@ import {
                     </Nav.Link>
                     <Nav.Link href="/feed">
                       <TiHome className="nav-icon hm" />
-                      <br />
                       <span>Home</span>
                     </Nav.Link>
                     <Nav.Link href="#features">
@@ -85,12 +85,16 @@ import {
                       <BsThreeDots />
                       <span>more</span>
                     </Nav.Link>
-                    <Nav.Link href="/me" className="">
-                    <Image src="https://bit.ly/3zegycw" style={{height: "25px", width:"25px"}} className="rounded-circle d-none d-sm-block"/>
-                    <br />
-                    <span>Me</span>
-                   </Nav.Link>
-                   
+                    <Dropdown style={{marginTop:"15px"}}>
+                    <Dropdown.Toggle variant="" style={{background:"none", border:"none", fontSize: "12px"}} id="dropdown-basic">
+                    <Image src={avatar} style={{height: "25px", width:"25px"}} className="rounded-circle d-none d-sm-block"/>
+                      Me
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="/me">View Profile</Dropdown.Item>
+                      <Dropdown.Item href="logout">Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
                   </Nav>
                   <div className="vl ml-1 d-none d-lg-block"></div>
                   <Nav.Link href="#pricing" className="d-none d-lg-block" style={{ color: "gray" }}>

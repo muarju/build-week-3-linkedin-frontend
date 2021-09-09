@@ -4,6 +4,16 @@ import axios from 'axios'
 import { useHistory } from 'react-router-dom';
 
 const SignIn =() => {
+  const history = useHistory();
+
+  const token= localStorage.getItem('accesstoken');
+  
+  if(token){
+    history.push("/");
+  }else{
+    
+  }
+
   const [user, setUser] = useState({
     email: "",
     password: ""
@@ -11,23 +21,23 @@ const SignIn =() => {
   const onInputChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
-  const history = useHistory();
+  
   const onSubmit = async e => {
     e.preventDefault();
     const response= await axios.post(`${process.env.REACT_APP_API_URL}/profile/login/`,user);
     const data=response.data
-    if(data==="authentication failed"){
-      console.log(data)
+    if(!data){
+      console.log("something wrong")
     }else{
-      console.log(data)
       localStorage.setItem('accesstoken', data.accesstoken);
       localStorage.setItem('username', data.data.username);
+      localStorage.setItem('name', data.data.name);
+      localStorage.setItem('surname', data.data.surname);
+      localStorage.setItem('avatar', data.data.image);
       localStorage.setItem('id', data.data._id);
       history.push("/")
     }
   }
-
-   
 		return (
 			<div className="sign-in-screen">
         <div className="sign-in-form">
