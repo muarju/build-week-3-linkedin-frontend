@@ -15,7 +15,7 @@ const formatDate = (dateString) => {
         <div className="experience-fragment-company-image">
           <img
             className="experience-fragment-image"
-            src={faker.image.business()}
+            src={props.experienceData.image}
             alt=""
           />
         </div>

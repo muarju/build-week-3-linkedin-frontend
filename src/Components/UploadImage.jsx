@@ -1,20 +1,15 @@
-import { Component } from "react";
-import { Form } from "react-bootstrap";
+import { Form } from 'react-bootstrap'
 
-class UploadImage extends Component {
-  /*   componentDidMount = () => {
-    const upload = async () => {
-let response = fetch("https://striveschool-api.herokuapp.com/api/profile/{userId}/experiences/:expId/picture")
-    };
-  }; */
-  render() {
+const UploadImage = ({image}) => {
     return (
-      <Form.Group className="w-100">
-        <Form.Label>Upload an Image</Form.Label>
-        <Form.Control type="file" />
-      </Form.Group>
-    );
-  }
+        <Form.Label 
+        htmlFor="file-input" 
+        className="d-flex pt-2 upload-image-label" 
+        // title={(image && image !== "https://via.placeholder.com/150" ) && image}
+        >
+            <i className="fas fa-image upload-image-icon"></i>{image ? <>Edit</> : <>Upload</>} Image
+        </Form.Label>
+    )
 }
 
-export default UploadImage;
+export default UploadImage
