@@ -12,48 +12,78 @@ import { BsThreeDots } from "react-icons/bs";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { AiFillPlaySquare } from "react-icons/ai";
 import { RiMessage2Line } from "react-icons/ri";
+import { useHistory } from 'react-router-dom';
+
 
 const CenteredModal = (props) => {
+  const history = useHistory();
+  const accesstoken=localStorage.getItem('accesstoken');
+  const id=localStorage.getItem('id');
+  const username=localStorage.getItem('username');
+  const avatar=localStorage.getItem('avatar');
+  const name=localStorage.getItem('name');
+  const surname=localStorage.getItem('surname');
+  let formData=null;
+  let postId=null
   const [modalShow, setModalShow] = useState(false);
-  // const [input, setInput] = useState("")
-  const [comment, setComent] = useState({
+  const [post, setPost] = useState({
     text: "",
+    username:`${username}`,
+    user: `${id}`
   });
-  // useEffect(() => {
+  const [postImage, setPostImage] = useState(null);
 
-  // }, [])
-  const fetchPost = async (e) => {
+  const onSubmit = async (e) => {
 
     e.preventDefault();
     try {
-      const response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/posts/",
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/post`,
         {
           method: "POST",
-          body: JSON.stringify(comment),
+          body: JSON.stringify(post),
           headers: {
-            Authorization:`Bearer ${process.env.REACT_APP_API_KEY}`,
+            'authentication':  `${accesstoken}`,
             "Content-Type": "application/json",
           },
         }
       );
       if (response.ok) {
-        alert("Your post is POSTED!");
-        setComent({
-          text: "",
-        });
+        let resp = await response.json()
+        postId=resp._id
+        console.log('post added')
       } else {
         alert("Something WRONG!");
       }
+
+      if(postImage){
+        const id=postId
+        formData = new FormData()
+        formData.append("image", postImage)
+
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/post/${id}/image`, {
+          method: "PUT",
+          body: formData,
+          headers: {
+            'authentication': `${accesstoken}`
+          },
+  
+        })
+  
+        if (response.ok) {
+          console.log('image also uploaded')
+        }
+      }
+      setTimeout(function() {
+        window.location.replace('/');
+      }, 500);
+      
+
     } catch (error) {
       console.log(error);
     }
   };
-
-  const handlePost = (key, value) => {
-    setComent({
-      [key]: value,
-    });
+  const onInputChange = e => {
+    setPost({ ...post, [e.target.name]: e.target.value });
   };
 
   return (
@@ -70,9 +100,9 @@ const CenteredModal = (props) => {
       </Modal.Header>
       <Modal.Body className="mb-0">
         <div className="d-flex">
-          <Image src="https://bit.ly/3zegycw" className="elon mt-0 mr-2" />
+          <Image src={avatar} className="elon mt-0 mr-2" />
           <div className="d-flex flex-column mt-n2">
-            <p className="profile-info">Cras mattis</p>
+            <p className="profile-info">{name} {surname}</p>
             <div
               onClick={() => setModalShow(true)}
               className="rounded-pill bg-white text-black border"
@@ -87,7 +117,7 @@ const CenteredModal = (props) => {
             <PrivacyModal show={modalShow} onHide={() => setModalShow(false)} />
           </div>
         </div>
-        <Form onSubmit={fetchPost}>
+        <Form onSubmit={e => onSubmit(e)}>
           <Form.Group
             className="mt-3 mb-0"
             controlId="exampleForm.ControlTextarea1"
@@ -95,10 +125,10 @@ const CenteredModal = (props) => {
             <Form.Control
               style={{ border: "none" }}
               as="textarea"
+              name="text"
               placeholder="What do you want to post?"
               rows={3}
-              value={comment.text}
-              onChange={(e) => handlePost("text", e.target.value)}
+              onChange={e => onInputChange(e)}
             />
           </Form.Group>
           <a className="profile-info" href="#">
@@ -107,7 +137,13 @@ const CenteredModal = (props) => {
 
           <div className="d-flex justify-content-between align-items-center mt-5">
             <div>
-              <HiOutlinePhotograph className="mr-2 icons" />
+              
+              <input type="file" id="file" style={{display: "none"}}
+                onChange={e => setPostImage(e.target.files[0])}/>
+                <label htmlFor="file" >
+                    <HiOutlinePhotograph className="mr-2 icons" />
+                </label>
+
               <AiFillPlaySquare className="mr-2 icons" />
               <IoDocumentTextSharp className="mr-2 icons" />
               <IoBagRemove className="mr-2 icons" />
@@ -118,7 +154,6 @@ const CenteredModal = (props) => {
             <RiMessage2Line className="mt-2 mr-n4" />
             <span className="mt-1">Anyone</span>
             <Button
-              disabled={!comment.text}
               type="submit"
               className="rounded-pill"
             >

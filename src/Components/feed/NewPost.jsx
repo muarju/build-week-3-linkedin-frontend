@@ -8,13 +8,13 @@ import { RiCalendarEventFill } from "react-icons/ri";
 import { RiArticleLine } from "react-icons/ri";
 const NewPost = () => {
   const [modalShow, setModalShow] = useState(false);
-
+  const avatar= localStorage.getItem('avatar');
   return (
     <Row>
       <Card className="mt-2 w-100 mb-0 newPost">
         <Card.Body>
           <div className="d-flex">
-            <Image src="https://bit.ly/3zegycw" className="elon mt-0 mr-2" />
+            <Image src={avatar} className="elon mt-0 mr-2" />
 
             <FormControl
               placeholder="Post here"
