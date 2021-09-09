@@ -26,11 +26,8 @@ body {
 }
 span {
   font-size: 11px;
-  margin-top: -5px;
 }
-/* #dropdown-basic {
-    margin-top: -5px;
-  } */
+
 .icon-box {
   display: flex;
   flex-direction: column;

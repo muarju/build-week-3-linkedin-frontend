@@ -233,6 +233,7 @@ div.col-1 {
 
 .post-comment-img {
     width: 15%;
+    padding-left: 15px;
 }
 
 .post-textarea {

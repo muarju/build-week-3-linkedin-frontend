@@ -133,23 +133,6 @@ button.dropdown-toggle.btn.btn-success#dropdown-basic {
 
 /* =================== MODAL ================ */
 
-div.modal-content {
-    height: 80vh;
-    width: 90%;
-    margin: auto;
-    position: relative;
-}
-
-div.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-}
-
-div.modal-body {
-    overflow: scroll;
-    padding-bottom: 3.2rem;
-}
 
 button.close span {
     font-size: 2rem;
