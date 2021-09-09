@@ -10,7 +10,6 @@ const AddForm = (props) => {
   const [image, setImage] = useState(null)
 
   const input = useRef()
-  const onHideFunction = props.onHide
   const username = localStorage.getItem('username');
   const accesstoken = localStorage.getItem('accesstoken');
   const expId = props.expData._id
@@ -37,7 +36,7 @@ const AddForm = (props) => {
         }
       })
       if (response.ok) {
-        onHideFunction()
+        props.fetch()
       }
       else {
         console.log(response.status)
@@ -46,21 +45,18 @@ const AddForm = (props) => {
       if (image) {
         formData = new FormData()
         formData.append("image", image)
-
+        const imageResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}/image`, {
+          method: "PUT",
+          body: formData,
+          headers: {
+            'authentication': `${accesstoken}`
+          },
+        })
+        if (imageResponse.ok) {
+          props.fetch()
+        }
       }
 
-      const imageResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}/image`, {
-        method: "PUT",
-        body: formData,
-        headers: {
-          'authentication': `${accesstoken}`
-        },
-
-      })
-
-      if (imageResponse.ok) {
-
-      }
     } catch (error) {
       console.log(error)
     }
@@ -77,10 +73,8 @@ const AddForm = (props) => {
         }
       });
       if (response.ok) {
-        onHideFunction()
-        setTimeout(function () {
-          window.location.replace('/me');
-        }, 500);
+        props.fetch()
+        props.onHide()
       }
       else {
         console.log(response.status)
@@ -97,7 +91,10 @@ const AddForm = (props) => {
 
       <Form
         className="container-form d-flex flex-column align-items-center"
-        onSubmit={(e) => this.Fetch(e)}
+        onSubmit={(e) => {
+          submitData(e)
+        props.onHide()
+        }}
       >
         <Form.Group className="w-100">
           <Form.Label>Title *</Form.Label>
@@ -325,7 +322,7 @@ const AddForm = (props) => {
         </Form.Group>
         <Form.Group className='w-100 d-flex justify-content-between'>
           <Button className='del-exp-button btn-light' type="submit" onClick={(e) => deleteData(e)}>Delete Experience</Button>
-          <Button className='edit-exp-button' type="submit" onClick={(e) => submitData(e)}>Save</Button>
+          <Button className='edit-exp-button' type="submit" >Save</Button>
         </Form.Group>
       </Form>
     </>

@@ -31,7 +31,7 @@ const SinglePost = (props) => {
   return (
     <Card className="w-100">
       <Card.Body className="post-card">
-        <a href={userID} className="post-user-info" style={{ "color": "#191919" }}>
+        <a href={`profile/${userID}`} className="post-user-info" style={{ "color": "#191919" }}>
           <div className="user-icon-container">
             <img src={props.user.image} alt="" className="user-icon" width="45" height="45"
             />

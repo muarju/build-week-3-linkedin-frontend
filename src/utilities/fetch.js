@@ -2,36 +2,52 @@ const accesstoken = localStorage.getItem('accesstoken');
 const userId = localStorage.getItem('id');
 
 
-export const getData = async (endpoint, accesstoken) => {
-    const response = await fetch(endpoint, {
-        headers: {
-            'authentication': `${accesstoken}`
+export const getData = async (endpoint, accesstoken, validation, loading) => {
+    try {
+        const response = await fetch(endpoint, {
+            headers: {
+                'authentication': `${accesstoken}`
+            }
+        })
+        if (response) {
+            const data = await response.json()
+            return data
+            validation(true)
+            loading(false)
+        } else {
+            console.log("something wrong")
+            validation(false)
         }
-    })
-    if (response) {
-        console.log(response)
-        const data = await response.json()
-        return data
-    } else {
-        console.log("something wrong")
+    } catch (error) {
+        console.log(error);
+        loading(false)
+        validation(false)
     }
 }
 
 
 export const postData = async (endpoint, accesstoken, objBody) => {
+    try {
+        const response = await fetch(endpoint, {
+            method: "POST",
+            body: JSON.stringify(objBody),
+            headers: {
+                'Content-Type': 'application/json',
+                'authentication': `${accesstoken}`
+            },
+        }
+        );
+        if (response.ok) {
+            const data = await response.json()
+            return data
 
-    const response = await fetch(endpoint, {
-        method: "POST",
-        body: JSON.stringify(objBody),
-        headers: {
-            'Content-Type': 'application/json',
-            'authentication': `${accesstoken}`
-        },
-    }
-    );
-    if (response.ok) {
-        const data = await response.json()
-        return data
+        } else {
+          
+        }
+
+    } catch (error) {
+        console.log(error);
+   
     }
 
 }
@@ -54,7 +70,7 @@ export const putData = async (endpoint, accesstoken, objBody) => {
 
 }
 
-export const putImage = (endpoint, accesstoken) => {
+export const putImage = async (endpoint, accesstoken, formData) => {
     try {
         const response = await fetch(endpoint, {
             method: "PUT",

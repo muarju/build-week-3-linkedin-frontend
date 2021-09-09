@@ -23,7 +23,7 @@ function App() {
           <Route exact path="/" render={(routerProps) => <FeedMain /> } />
           <Route exact path="/home" component={<FeedMain />} />
           <Route exact path="/feed" render={(routerProps) => <FeedMain /> } />          
-          <Route exact path="/me" render={(routerProps) => <MeSection/> } />
+          <Route exact path="/me" render={(routerProps) => <MeSection {...routerProps}/> } />
           <Route exact path="/logout" component={Logout}></Route>
         </div>
       </Router>

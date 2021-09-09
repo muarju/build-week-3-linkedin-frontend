@@ -17,6 +17,8 @@ export default function ExperienceSection(props) {
   const experienceValue = showMore  ? "Show Less" : `Show ${experiences.length - 5} more experiences`
   const iconValues      = !showMore ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />
 
+
+
   async function fetchExperiences() {
     try {
       const fetchExp = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences`, {
@@ -34,7 +36,6 @@ export default function ExperienceSection(props) {
 
   useEffect(() => {
     fetchExperiences();
-    console.log('the props I am looking for', props);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -46,10 +47,14 @@ export default function ExperienceSection(props) {
         <Card.Body>
           <div className="profile-section-header-container">
             <h5 className="profile-body-section-title my-2">Experience</h5>
-            <AddDataButton />
+            { 
+              !props.params?
+              <AddDataButton  fetch={fetchExperiences}/> : <> </>
+
+            }
           </div>
 
-          {experiences && sliceValue.map(exp => <Experience onUpdate={props.onUpdate} key={exp._id} experienceData={exp} username={username}/>)}
+          {experiences && sliceValue.map(exp => <Experience onUpdate={props.onUpdate} key={exp._id} experienceData={exp} username={username} params={props.params} fetch={fetchExperiences}/> )}
 
           {
             experiences.length > 5 && <Row className='btn-custom w-100 text-muted d-flex'>

@@ -1,53 +1,45 @@
+import React from 'react'
 import { Container, Col, Row, Card, ListGroup, Button } from "react-bootstrap";
 import { SiTesla, SiSpacex } from "react-icons/si";
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
+import MeActivity from './MeActivity';
 import ExperienceSection from './ExperienceSection'
 import cover from "../assets/cover.jpg";
 import ProfileImage from './ProfileImage'
 import Loading from './Loading'
-import React from 'react'
-// import ProfileEdit from "./ProfileEdit";
-// import InvalidPage from './InvalidPage'
-import UserPostsProfile from './UserPostsProfile'
+import faker from "faker"
 
-const  ProfileSection = (props) => {
 
+const ProfileSection = (props) => {
   const [profileData, setProfileData] = useState(null)
   const [validProfile, setValidProfile] = useState()
   const [loading, setLoading] = useState(true)
-  const [isReload, setIsReload] = useState(false)
 
-  const reload = () => {
-    setIsReload(true)
-  }
+  let accesstoken = localStorage.getItem('accesstoken');
 
   useEffect(() => {
     fetchData()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isReload])
-
+    console.log('here are teh props', props);
+  }, [])
 
   const fetchData = async () => {
-    const accesstoken = localStorage.getItem('accesstoken');
     let profileId = props.match.params.id
     try {
       let response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${profileId}`, {
         headers: {
-          'Content-Type': 'application/json',
           'authentication': `${accesstoken}`
-        }
+        },
       });
 
       if (response.ok) {
-        console.log("reponse ok!")
         let resp = await response.json()
+        console.log(resp);
         setProfileData(resp)
         setValidProfile(true)
         setLoading(false)
         console.log("fetch", resp)
       } else {
-        console.log("response not ok!")
         setValidProfile(false)
       }
     } catch (error) {
@@ -62,14 +54,13 @@ const  ProfileSection = (props) => {
   } else {
     return (
       <Container className="main-body-container">
-        {console.log("PROFILE DATA", profileData)}
         <Row className="justify-content-center">
           <Col sm={8} className="user-info mt-2">
             <Card>
               <div className="cover-image">
                 <Card.Img className="cover-img" variant="top" src={cover} />
               </div>
-              {<ProfileImage profileData={profileData} fetch={fetchData} />}
+              {<ProfileImage profileData={profileData} fetch={fetchData} params={props.match.params.id} />}
 
               <Card.Body className="user-info-body">
                 <Row className="justify-content-end">
@@ -125,10 +116,10 @@ const  ProfileSection = (props) => {
                 </div>
                 <div className="profile-button-margin">
                   <Button className="btn text-light rounded-pill mb-2 open-to">
-                    Open To
+                    Following
                   </Button>
                   <button className="btn btn-outline-secondary rounded-pill mb-2">
-                    Add section
+                    Message
                   </button>
                   <button className="btn btn-outline-secondary rounded-pill mb-2">
                     More
@@ -156,7 +147,12 @@ const  ProfileSection = (props) => {
                 </div>
                 <Row>
                   <Col>
-                    <UserPostsProfile />
+                    <MeActivity randomimage={faker.image.image()} />
+                    <MeActivity randomimage={faker.image.business()} />
+                  </Col>
+                  <Col>
+                    <MeActivity randomimage={faker.image.animals()} />
+                    <MeActivity randomimage={faker.image.food()} />
                   </Col>
                 </Row>
                 <Button
@@ -171,7 +167,7 @@ const  ProfileSection = (props) => {
             </Card>
 
             <Card>
-              <ExperienceSection userID={profileData._id} editCapability={false} onUpdate={reload} />
+              <ExperienceSection userID={profileData._id} editCapability={false} params={props.match.params.id} />
             </Card>
 
           </Col>

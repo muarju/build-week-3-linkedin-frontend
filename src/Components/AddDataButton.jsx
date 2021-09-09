@@ -32,7 +32,7 @@ export default function AddExperience(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <AddForm />
+          <AddForm fetch={props.fetch} onHide={handleClose} />
         </Modal.Body>
       </Modal>
     </>

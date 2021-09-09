@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import { useState } from "react";
 import { Button, Modal, Form, Row, Col } from "react-bootstrap";
 import { MdEdit } from "react-icons/md";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -6,43 +6,39 @@ import { AiOutlinePlus } from "react-icons/ai";
 const ProfileEdit = (props) => {
   const [Lgshow, setLgShow] = useState(false);
 
+  let accesstoken  = localStorage.getItem('accesstoken');
+  const headerData = props.profileData
+  const handleShow = () => setLgShow(true);
 
-
-  const [headerData] = useState(
-      props.profileData
-  )
-
-const handleShow = () => setLgShow(true);
-
-const submitData = async () => {
+  const submitData = async (e) => {
+    e.preventDefault()
     try {
-        let response = await fetch('https://striveschool-api.herokuapp.com/api/profile/',{
-          method: 'PUT',
-          body: JSON.stringify(headerData),
-          headers: {
-              'Content-Type': 'application/json',
-              Authorization : `Bearer ${process.env.REACT_APP_API_KEY}`
-          }
+      let response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${props.profileData._id}`, {
+        method: 'PUT',
+        body: JSON.stringify(headerData),
+        headers: {
+          'Content-Type': 'application/json',
+          'authentication': `${accesstoken}`
+        }
       })
-      if(response.ok){
-          alert('Data Updated!')
-          props.fetch()
+      if (response.ok) {
+        props.fetch()
+        setLgShow(false)
+
       }
-      else{
-          console.log(response.status)
+      else {
+        console.log(response.status)
       }
     } catch (error) {
-        console.log(error)
+      console.log(error)
     }
-}
+  }
 
 
 
 
   return (
     <>
-    {console.log(headerData.name)}
-    
       <MdEdit size="1x" className="svg-edit" onClick={handleShow} />
       <Modal
         show={Lgshow}
@@ -57,7 +53,7 @@ const submitData = async () => {
           <Form className='edit-form'>
             <Row>
               <Col className="col-lg-6">
-                <Form.Group className="mb-1" controlId="formGroupEmail">
+                <Form.Group className="mb-1">
                   <Form.Label>First Name *</Form.Label>
                   <Form.Control
                     className="input-value"
@@ -65,8 +61,8 @@ const submitData = async () => {
                     placeholder="Enter First Name"
                     defaultValue={headerData.name}
                     required
-                    onChange={(e)=>{
-                        headerData.name=e.target.value;
+                    onChange={(e) => {
+                      headerData.name = e.target.value;
                     }}
                   />
                 </Form.Group>
@@ -80,8 +76,8 @@ const submitData = async () => {
                     placeholder="Enter Last Name"
                     defaultValue={headerData.surname}
                     required
-                    onChange={(e)=>{
-                        headerData.surname = e.target.value
+                    onChange={(e) => {
+                      headerData.surname = e.target.value
                     }}
                   />
                 </Form.Group>
@@ -101,7 +97,7 @@ const submitData = async () => {
                 Name pronunciation can only be added using our mobile app.
               </span>
             </Row>
-            <Form.Group className="mb-1" controlId="formGroupEmail">
+            <Form.Group className="mb-1">
               <Form.Label>Pronouns</Form.Label>
               <Row className="profile-edit-dropdown">
                 <select
@@ -131,15 +127,15 @@ const submitData = async () => {
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Label>Headline *</Form.Label>
-              <Form.Control className="input-value" as="textarea" rows={2} defaultValue={headerData.bio} required onChange={(e)=>{
-                        headerData.bio=e.target.value
-                    }}/>
+              <Form.Control className="input-value" as="textarea" rows={2} defaultValue={headerData.bio} required onChange={(e) => {
+                headerData.bio = e.target.value
+              }} />
             </Form.Group>
             <Row className="profile-edit-pos">
               <AiOutlinePlus />
               <span>Add Current Position</span>
             </Row>
-            <Form.Group className="mb-1" controlId="formGroupEmail">
+            <Form.Group className="mb-1">
               <Form.Label>Education</Form.Label>
               <Row className="profile-edit-dropdown">
                 <select
@@ -163,32 +159,32 @@ const submitData = async () => {
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Check className='form-check' type="checkbox" label="Show education in my intro" />
             </Form.Group>
-            
-            <Form.Group className="mb-1" controlId="formGroupEmail">
-                  <Form.Label>Country/Region *</Form.Label>
-                  <Form.Control
-                    className="input-value-bottom"
-                    type="email"
-                    placeholder="Location"
-                    defaultValue={headerData.area}
-                    required
-                    onChange={(e)=>{
-                        headerData.area=e.target.value
-                    }}
-                  />
-                </Form.Group>
 
-                <Form.Group className="mb-1" controlId="formGroupEmail">
-                  <Form.Label>Locations in this Country/Region</Form.Label>
-                  <Form.Control
-                    className="input-value-bottom"
-                    type="email"
-                    placeholder="Locations"
-                    
-                  />
-                </Form.Group>
+            <Form.Group className="mb-1">
+              <Form.Label>Country/Region *</Form.Label>
+              <Form.Control
+                className="input-value-bottom"
+                type="email"
+                placeholder="Location"
+                defaultValue={headerData.area}
+                required
+                onChange={(e) => {
+                  headerData.area = e.target.value
+                }}
+              />
+            </Form.Group>
 
-                <Form.Group className="mb-3" controlId="formGroupEmail">
+            <Form.Group className="mb-1">
+              <Form.Label>Locations in this Country/Region</Form.Label>
+              <Form.Control
+                className="input-value-bottom"
+                type="email"
+                placeholder="Locations"
+
+              />
+            </Form.Group>
+
+            <Form.Group className="mb-3" >
               <Form.Label>Industry *</Form.Label>
               <Row className="profile-edit-dropdown">
                 <select
@@ -212,13 +208,13 @@ const submitData = async () => {
             </Row>
 
             <Row className='profile-edit-text mt-2'>
-                <label className='mr-auto'>
+              <label className='mr-auto'>
                 Profile URL, Email, WeChat ID
-                </label>
-                <MdEdit size="1x" className="svg-edit-bottom"/>
+              </label>
+              <MdEdit size="1x" className="svg-edit-bottom" />
             </Row>
             <hr className='hr-line'></hr>
-            
+
           </Form>
         </Modal.Body>
         <Modal.Footer>
