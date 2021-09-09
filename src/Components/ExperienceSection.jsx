@@ -32,6 +32,7 @@ export default function ExperienceSection(props) {
 
   useEffect(() => {
     fetchExperiences();
+    console.log('the props I am looking for', props);
   }, []);
 
   if (experiences === null) {
@@ -45,7 +46,7 @@ export default function ExperienceSection(props) {
             <AddDataButton />
           </div>
 
-          {experiences && sliceValue.map(exp => <Experience key={exp._id} experienceData={exp} username={username}/>)}
+          {experiences && sliceValue.map(exp => <Experience onUpdate={props.onUpdate} key={exp._id} experienceData={exp} username={username}/>)}
 
           {
             experiences.length > 5 && <Row className='btn-custom w-100 text-muted d-flex'>

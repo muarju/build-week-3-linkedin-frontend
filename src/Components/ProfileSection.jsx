@@ -1,24 +1,30 @@
-import React, { Component } from 'react'
 import { Container, Col, Row, Card, ListGroup, Button } from "react-bootstrap";
 import { SiTesla, SiSpacex } from "react-icons/si";
 import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import ProfileEdit from "./ProfileEdit";
 import ExperienceSection from './ExperienceSection'
 import cover from "../assets/cover.jpg";
 import ProfileImage from './ProfileImage'
-import InvalidPage from './InvalidPage'
 import Loading from './Loading'
+// import ProfileEdit from "./ProfileEdit";
+// import InvalidPage from './InvalidPage'
 import UserPostsProfile from './UserPostsProfile'
 
-function ProfileSection(props) {
+const  ProfileSection = (props) => {
+  
   const [profileData, setProfileData] = useState(null)
   const [validProfile, setValidProfile] = useState()
   const [loading, setLoading] = useState(true)
+  const [isReload, setIsReload] = useState(false)
+
+  const reload = () => {
+    setIsReload(true)
+  }
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [isReload])
+
 
   const fetchData = async () => {
     const id = localStorage.getItem('id');
@@ -165,7 +171,7 @@ function ProfileSection(props) {
             </Card>
 
             <Card>
-              <ExperienceSection userID={profileData._id} editCapability={false} />
+              <ExperienceSection userID={profileData._id} editCapability={false} onUpdate={reload} />
             </Card>
 
           </Col>

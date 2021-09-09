@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { FaLessThan } from "react-icons/fa";
+// import { FaLessThan } from "react-icons/fa";
 import UploadImage from "./UploadImage";
 
 const AddForm = () => {
@@ -56,8 +56,10 @@ const AddForm = () => {
       );
       if (postExp.ok) {
         expId = await postExp.json()
-        console.log('post data here', expId);
         alert("Experience added !");
+        setTimeout(function() {
+          window.location.replace('/');
+        }, 500);
       }
 
 
@@ -76,8 +78,9 @@ const AddForm = () => {
       })
       
       if (response.ok) {
-        const imageData = await response.json()
-        console.log(expId);
+        setTimeout(function() {
+          window.location.replace('/');
+        }, 500);
       }
     } catch (error) {
       console.log(error);

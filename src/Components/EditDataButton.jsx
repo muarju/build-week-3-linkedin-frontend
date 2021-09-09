@@ -58,7 +58,7 @@ export default function EditDataButton(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {expData && <EditForm expData={expData}/>}
+          {expData && <EditForm expData={expData} onUpdate={props.onUpdate} onHide={() => setShow(false)}/>}
         </Modal.Body>
       </Modal>
     </>

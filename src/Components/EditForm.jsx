@@ -9,7 +9,8 @@ const AddForm = (props) => {
   const [image, setImage] = useState(null)
 
   const input = useRef()
-
+  const onHideFunction = props.onHide
+  const onUpdateFunction = props.onUpdate
   const username = localStorage.getItem('username');
   const accesstoken = localStorage.getItem('accesstoken');
   const expId = props.expData._id
@@ -32,7 +33,8 @@ const AddForm = (props) => {
         }
       })
       if (response.ok) {
-
+        onHideFunction()
+        onUpdateFunction()
       }
       else {
         console.log(response.status)
@@ -41,6 +43,7 @@ const AddForm = (props) => {
       if (image) {
         formData = new FormData()
         formData.append("image", image)
+
       }
 
       const imageResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}/image`, {
@@ -53,7 +56,7 @@ const AddForm = (props) => {
       })
 
       if (imageResponse.ok) {
-        const imageData = await imageResponse.json()
+
       }
     } catch (error) {
       console.log(error)
@@ -71,7 +74,10 @@ const AddForm = (props) => {
         }
       });
       if (response.ok) {
-        console.log('all went well');
+        onHideFunction()
+        setTimeout(function() {
+          window.location.replace('/me');
+        }, 500);
       }
       else {
         console.log(response.status)

@@ -39,7 +39,9 @@ export default function Experience(props) {
               {<EditDataButton
                 experience={props.experienceData}
                 username={props.username}
-                expId={props.experienceData._id} />}
+                expId={props.experienceData._id} 
+                onUpdate = {props.onUpdate}
+                />}
             </div>
           </div>
 

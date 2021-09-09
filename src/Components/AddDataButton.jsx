@@ -5,8 +5,8 @@ import { useState } from "react";
 
 export default function AddExperience(props) {
   let [show, setShow] = useState(false);
-  
-  const handleShow  = () => setShow(true);
+
+  const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
 
