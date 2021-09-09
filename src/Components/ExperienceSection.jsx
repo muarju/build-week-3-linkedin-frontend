@@ -1,25 +1,43 @@
 import React, { useState, useEffect } from "react";
-import { Card, Row, Button } from "react-bootstrap";
+import { Card, Row } from "react-bootstrap";
 import Experience from "./experience";
 import Loading from "./Loading";
 import AddDataButton from "./AddDataButton";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
-import axios from 'axios'
 
 
 
 export default function ExperienceSection(props) {
-  const [experiences, setExperiences] = useState(null);
+  const [experiences, setExperiences] = useState([]);
   const [showMore, setShowMore] = useState(false)
-  const username=localStorage.getItem('username');
-  const accesstoken=localStorage.getItem('accesstoken');
+
+  const username        = localStorage.getItem('username');
+  const accesstoken     = localStorage.getItem('accesstoken');
+  const sliceValue      = !showMore ? experiences.slice(0, 5) : experiences
+  const experienceValue = showMore  ? "Show Less" : `Show ${experiences.length - 5} more experiences`
+  const iconValues      = !showMore ? <MdKeyboardArrowDown /> : <MdKeyboardArrowUp />
+
+  async function fetchExperiences() {
+    try {
+      const fetchExp = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'authentication': `${accesstoken}`
+        }
+      });
+      const data = await fetchExp.json();
+      setExperiences(data);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
     fetchExperiences();
+    console.log('the props I am looking for', props);
   }, []);
 
   if (experiences === null) {
-    console.log("Loading!");
     return <Loading />;
   } else {
     return (
@@ -27,41 +45,20 @@ export default function ExperienceSection(props) {
         <Card.Body>
           <div className="profile-section-header-container">
             <h5 className="profile-body-section-title my-2">Experience</h5>
-
             <AddDataButton />
           </div>
 
-          { showMore ? (experiences && <>{ experiences.map((exp) => (
-            <Experience experienceData={exp} userId={props.userId} expId={exp._id}/>
-         ))} </>)  : (experiences && <>{ experiences.slice(0,3).map((exp) => (
-          <Experience experienceData={exp} userId={props.userId} expId={exp._id}/>
-       ))} </>) }
-          <Row>
-            <Button className='btn-custom w-100 text-muted d-flex' onClick={() => {setShowMore(!showMore)}}>
-          {showMore ? <>show less<span><MdKeyboardArrowUp className='arrow d-flex' size='1x'/></span></> : <> show more<span><MdKeyboardArrowDown className='arrow d-flex' size='1x'/></span> </>}
-              
-            </Button>
-          </Row>
+          {experiences && sliceValue.map(exp => <Experience onUpdate={props.onUpdate} key={exp._id} experienceData={exp} username={username}/>)}
+
+          {
+            experiences.length > 5 && <Row className='btn-custom w-100 text-muted d-flex'>
+              <div onClick={() => setShowMore(!showMore)}>
+                <span>{experienceValue}</span><span>{iconValues}</span>
+              </div>
+            </Row>
+          }
         </Card.Body>
       </div>
     );
-  }
-
-  async function fetchExperiences() {
-    const userId = process.env.REACT_APP_API_USER;
-    try {
-      const response = await axios.get( `${process.env.REACT_APP_API_URL}/profile/${username}/experiences`,{
-        headers: {
-        'Content-Type': 'application/json',
-        'authentication':  `${accesstoken}`
-        }
-      })
-      if(response){
-        setExperiences(response.data);
-        console.log(response.data)
-      }
-    } catch (err) {
-      console.log(err);
-    }
   }
 }

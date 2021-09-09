@@ -1,7 +1,7 @@
-import React, { Component,useState } from 'react'
-import { Form, Button} from 'react-bootstrap'
-import axios from 'axios'
+import { useState } from 'react'
+import { Form, Button } from 'react-bootstrap'
 import { useHistory } from 'react-router-dom';
+import axios from 'axios'
 
 const SignIn =() => {
   const history = useHistory();
@@ -18,6 +18,7 @@ const SignIn =() => {
     email: "",
     password: ""
   });
+
   const onInputChange = e => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
