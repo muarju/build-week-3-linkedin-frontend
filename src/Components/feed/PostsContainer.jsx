@@ -3,6 +3,7 @@ import Loading from "../Loading";
 import { Component } from "react";
 
 class PostsContainer extends Component {
+   
   state = {
     loading: false,
     posts: [],
@@ -10,16 +11,16 @@ class PostsContainer extends Component {
   };
 
   componentDidMount = async () => {
+    const accesstoken=localStorage.getItem('accesstoken');
     this.setState({
       ...this.state,
       loading: true,
     });
     try {
-      let response = await fetch(
-        "https://striveschool-api.herokuapp.com/api/posts",
+      let response = await fetch( `${process.env.REACT_APP_API_URL}/post`,
         {
           headers: {
-            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+            'authentication':  `${accesstoken}`,
           },
         }
       );
@@ -30,7 +31,6 @@ class PostsContainer extends Component {
           posts: data,
           display: true,
         });
-        console.log(this.state);
       } else {
         console.log("Error");
         this.setState({
