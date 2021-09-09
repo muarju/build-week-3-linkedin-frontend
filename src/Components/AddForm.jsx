@@ -72,9 +72,9 @@ const AddForm = () => {
         headers: {
           'authentication': `${accesstoken}`
         },
-
+        
       })
-
+      
       if (response.ok) {
         const imageData = await response.json()
         console.log(expId);

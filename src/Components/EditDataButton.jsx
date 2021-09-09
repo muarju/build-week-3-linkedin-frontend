@@ -6,30 +6,28 @@ import EditForm from "./EditForm";
 
 export default function EditDataButton(props) {
   let [show, setShow] = useState(false);
-  const [expData, setexpData] = useState()
+  const [expData, setexpData] = useState(null)
 
-  const handleShow = () => {
-    setShow(true);
-  };
-  const handleClose = () => {
-    setShow(false);
-  };
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
 
-  const userId = props.userId;
+
+  const username = localStorage.getItem('username');
+  const accesstoken = localStorage.getItem('accesstoken');
   const expId = props.expId
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences/${expId}`,{
-        headers:
-        {
-          Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'authentication': `${accesstoken}`
         }
-      })
-      if(response.ok){
+      });
+      if (response.ok) {
         let resp = await response.json()
         setexpData(resp)
-        console.log('edit button fetch',resp)
+        console.log(expData);
       }
     } catch (error) {
       console.log(error)
@@ -38,7 +36,7 @@ export default function EditDataButton(props) {
 
   useEffect(() => {
     fetchData()
-  },[])
+  }, [])
 
   return (
     <>
@@ -60,7 +58,7 @@ export default function EditDataButton(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { expData && <EditForm exp={props.e} userId={props.userId} editData={expData} expId={props.expId}/>}
+          {expData && <EditForm expData={expData}/>}
         </Modal.Body>
       </Modal>
     </>

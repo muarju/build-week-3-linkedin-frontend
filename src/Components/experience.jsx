@@ -4,10 +4,20 @@ import EditDataButton from "./EditDataButton";
 
 export default function Experience(props) {
 
-const formatDate = (dateString) => {
-  const options = { year: "numeric", month: "long", day: "numeric" }
-  return new Date(dateString).toLocaleDateString(undefined, options)
-}
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" }
+    return new Date(dateString).toLocaleDateString(undefined, options)
+  }
+
+  const convertDateToString = (start, end) => {
+    console.log(start);
+    console.log(end);
+    if (end === null) {
+      return start + " - Present";
+    } else {
+      return start + " - " + end;
+    }
+  }
 
   return (
     <>
@@ -26,7 +36,10 @@ const formatDate = (dateString) => {
               {props.experienceData.role}
             </h6>
             <div className="experience-fragment-edit-container">
-              {  <EditDataButton e={props.experienceData} userId={props.userId} expId={props.expId}/> }
+              {<EditDataButton
+                experience={props.experienceData}
+                username={props.username}
+                expId={props.experienceData._id} />}
             </div>
           </div>
 
@@ -51,13 +64,5 @@ const formatDate = (dateString) => {
   );
 }
 
-function convertDateToString(start, end) {
-  console.log(start);
-  console.log(end);
-  if (end === null) {
-    return start + " - Present";
-  } else {
-    return start + " - " + end;
-  }
-}
+
 
