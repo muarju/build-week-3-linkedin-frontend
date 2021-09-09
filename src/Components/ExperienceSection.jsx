@@ -4,13 +4,15 @@ import Experience from "./experience";
 import Loading from "./Loading";
 import AddDataButton from "./AddDataButton";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md'
+import axios from 'axios'
+
+
 
 export default function ExperienceSection(props) {
   const [experiences, setExperiences] = useState(null);
   const [showMore, setShowMore] = useState(false)
-
-  console.log("Should be null?", experiences);
-  console.log('exp section debug', props.userId)
+  const username=localStorage.getItem('username');
+  const accesstoken=localStorage.getItem('accesstoken');
 
   useEffect(() => {
     fetchExperiences();
@@ -48,17 +50,16 @@ export default function ExperienceSection(props) {
   async function fetchExperiences() {
     const userId = process.env.REACT_APP_API_USER;
     try {
-      const fetchExp = await fetch(
-        `https://striveschool-api.herokuapp.com/api/profile/${userId}/experiences`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${process.env.REACT_APP_API_KEY}`
-          },
+      const response = await axios.get( `${process.env.REACT_APP_API_URL}/profile/${username}/experiences`,{
+        headers: {
+        'Content-Type': 'application/json',
+        'authentication':  `${accesstoken}`
         }
-      );
-      const data = await fetchExp.json();
-      setExperiences(data);
+      })
+      if(response){
+        setExperiences(response.data);
+        console.log(response.data)
+      }
     } catch (err) {
       console.log(err);
     }
