@@ -7,21 +7,21 @@ import axios from "axios";
 
 
 const SinglePost = (props) => {
-  
+
   const [showComment, SetShowComment] = useState(false);
   const userID = props.user._id
-  const id=localStorage.getItem('id');
-  const accesstoken=localStorage.getItem('accesstoken');
-  
-  const LikeAction=async (postId)=>{
-    const response= await axios.get(`${process.env.REACT_APP_API_URL}/post/${postId}/like/${id}`,{
+  const id = localStorage.getItem('id');
+  const accesstoken = localStorage.getItem('accesstoken');
+
+  const LikeAction = async (postId) => {
+    const response = await axios.get(`${process.env.REACT_APP_API_URL}/post/${postId}/like/${id}`, {
       headers: {
-      'authentication':  `${accesstoken}`
+        'authentication': `${accesstoken}`
       }
     })
-    if(response){
+    if (response) {
       console.log(response)
-    }else{
+    } else {
       console.log("something wrong")
     }
   }
@@ -31,7 +31,7 @@ const SinglePost = (props) => {
   return (
     <Card className="w-100">
       <Card.Body className="post-card">
-        <a href={userID} className="post-user-info" style={{"color":"#191919"}}>
+        <a href={userID} className="post-user-info" style={{ "color": "#191919" }}>
           <div className="user-icon-container">
             <img src={props.user.image} alt="" className="user-icon" width="45" height="45"
             />
@@ -41,7 +41,7 @@ const SinglePost = (props) => {
               {props.user.name + " " + props.user.surname} • <span className="text-secondary">{relatedness()}</span>
             </h6>
             <p className="post-job-descriptor text-secondary">
-              {props.user.title} 
+              {props.user.title}
             </p>
             <p className="post-job-descriptor-details text-secondary">
               {formatDate(props.post.createdAt)} • <BiWorld />
@@ -58,20 +58,20 @@ const SinglePost = (props) => {
             </div>
           )
         }
-          <ul style={{fontSize: "10px", lineHeight:"20px", display: "inline-flex", padding:"0px"}}>
-            <li style={{listStyle: "none", marginRight: "20px"}}><img src="https://static-exp1.licdn.com/sc/h/8ekq8gho1ruaf8i7f86vd1ftt" height="16px" width="16px"/> 
+        <ul style={{ fontSize: "10px", lineHeight: "20px", display: "inline-flex", padding: "0px" }}>
+          <li style={{ listStyle: "none", marginRight: "20px" }}><img src="https://static-exp1.licdn.com/sc/h/8ekq8gho1ruaf8i7f86vd1ftt" height="16px" width="16px" />
             {props.post.likes.length}</li>
-            <li>{props.post.Comments.length} comments</li>
-          </ul>
+          <li>{props.post.Comments.length} comments</li>
+        </ul>
         <Row className="post-buttons-container">
           <div>
           </div>
           <div className="post-action-container" >
-            <div className="post-action" onClick={()=> LikeAction(props.post._id)}>
+            <div className="post-action" onClick={() => LikeAction(props.post._id)}>
               <BiLike size={20} />
               <span className="post-action-descriptor">Like</span>
             </div>
-            <div xs={1} className="post-action" onClick={()=> SetShowComment(true)}>
+            <div xs={1} className="post-action" onClick={() => SetShowComment(true)}>
               <BiComment size={19} />
               <span className="post-action-descriptor">Comment</span>
             </div>
@@ -85,26 +85,26 @@ const SinglePost = (props) => {
             </div>
           </div>
         </Row>
-        
+
         <Row>
           <Col className={showComment ? "post-comment-area" : "d-none"}>
-          {props.post.Comments.map(c => 
-             <Row className="d-flex">
-             <div className="post-comment-img">
-               <img
-                 src={c.profileId.image}
-                 alt="profile-picture"
-                 className="rounded-circle" 
-                 style={{height: "40px", width: "40px", padding: "5px"}}
-               />
-             </div>
-             <div className="pt-2">
-             {c.comment}
-             </div>
-           </Row>
-            
+            {props.post.Comments.map(c =>
+              <Row className="d-flex">
+                <div className="post-comment-img">
+                  <img
+                    src={c.profileId.image}
+                    alt="profile-picture"
+                    className="rounded-circle"
+                    style={{ height: "40px", width: "40px", padding: "5px" }}
+                  />
+                </div>
+                <div className="pt-2">
+                  {c.comment}
+                </div>
+              </Row>
+
             )}
-           
+
             <Row className="d-flex">
               <div className="post-comment-img">
                 <img
@@ -136,7 +136,7 @@ const SinglePost = (props) => {
 };
 
 function relatedness() {
-  let relatedness = Math.floor(Math.random()*3) +1
+  let relatedness = Math.floor(Math.random() * 3) + 1
   if (relatedness === 1) return (relatedness + "st")
   if (relatedness === 2) return (relatedness + "nd")
   if (relatedness === 3) return (relatedness + "rd")

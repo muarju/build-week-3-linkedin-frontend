@@ -1,5 +1,4 @@
 import React from "react";
-import faker from "faker";
 import EditDataButton from "./EditDataButton";
 
 export default function Experience(props) {

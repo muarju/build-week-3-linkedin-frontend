@@ -6,12 +6,13 @@ import ExperienceSection from './ExperienceSection'
 import cover from "../assets/cover.jpg";
 import ProfileImage from './ProfileImage'
 import Loading from './Loading'
+import React from 'react'
 // import ProfileEdit from "./ProfileEdit";
 // import InvalidPage from './InvalidPage'
 import UserPostsProfile from './UserPostsProfile'
 
 const  ProfileSection = (props) => {
-  
+
   const [profileData, setProfileData] = useState(null)
   const [validProfile, setValidProfile] = useState()
   const [loading, setLoading] = useState(true)
@@ -23,13 +24,12 @@ const  ProfileSection = (props) => {
 
   useEffect(() => {
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReload])
 
 
   const fetchData = async () => {
-    const id = localStorage.getItem('id');
     const accesstoken = localStorage.getItem('accesstoken');
-    console.log("fetching?")
     let profileId = props.match.params.id
     try {
       let response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${profileId}`, {

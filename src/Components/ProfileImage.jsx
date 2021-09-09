@@ -3,8 +3,8 @@ import { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiPhotoAlbum } from 'react-icons/bi'
 import { RiDeleteBin5Line } from 'react-icons/ri'
-import ProfileImageUpload from "./ProfileImageUpload";
 import { MdModeEdit } from 'react-icons/md'
+import ProfileImageUpload from "./ProfileImageUpload";
 
 const ProfileImage = (props) => {
   const [lgShow, setLgShow] = useState(false);

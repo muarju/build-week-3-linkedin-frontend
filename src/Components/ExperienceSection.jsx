@@ -35,6 +35,7 @@ export default function ExperienceSection(props) {
   useEffect(() => {
     fetchExperiences();
     console.log('the props I am looking for', props);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (experiences === null) {
