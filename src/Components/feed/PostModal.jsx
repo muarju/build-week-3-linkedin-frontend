@@ -73,9 +73,8 @@ const CenteredModal = (props) => {
           console.log('image also uploaded')
         }
       }
-      setTimeout(function() {
-        window.location.replace('/');
-      }, 500);
+      props.fetch()
+      
       
 
     } catch (error) {

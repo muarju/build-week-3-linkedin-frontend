@@ -73,10 +73,8 @@ const CenteredEditModal = (props) => {
           console.log('image also uploaded')
         }
       }
+      props.fetch()
       
-      setTimeout(function() {
-        window.location.replace('/');
-      }, 500);
       
 
     } catch (error) {

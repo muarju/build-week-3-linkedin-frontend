@@ -4,7 +4,7 @@ import FeedLeftSidebar from './FeedLeftSidebar'
 import FeedRightSidebar from './FeedRightSidebar'
 import { withRouter } from 'react-router-dom'
 import PostsContainer from "./PostsContainer";
-import NewPost from "./NewPost";
+
 
 
 class FeedMain extends Component {
@@ -17,7 +17,7 @@ class FeedMain extends Component {
           <Row>
             <Col sm={3} className="rightSidebar"> <FeedLeftSidebar /></Col>
             <Col sm={5} className="feedMain"> 
-              <NewPost />
+            
               <PostsContainer />
               </Col>
             <Col sm={4}> <FeedRightSidebar /></Col>

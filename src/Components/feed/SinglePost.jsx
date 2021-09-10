@@ -37,6 +37,7 @@ const SinglePost = (props) => {
       console.log("something wrong")
     }
   }
+
   const onSubmit=async (e,postId) =>{
     e.preventDefault();
     console.log(comment)
@@ -46,9 +47,9 @@ const SinglePost = (props) => {
       }
     })
     if(response){
-      setTimeout(function() {
-        window.location.replace('/');
-      }, 500);
+      props.fetch()
+
+     
     }else{
       console.log("something wrong")
     }
@@ -69,6 +70,7 @@ const SinglePost = (props) => {
   })
   if(response){
     props.fetch()
+
   }else{
     console.log("something wrong")
   }
@@ -82,9 +84,8 @@ const SinglePost = (props) => {
     }
   })
   if(response){
-    setTimeout(function() {
-      window.location.replace('/');
-    }, 500);
+    props.fetch()
+
   }else{
     console.log("something wrong")
   }
@@ -126,6 +127,7 @@ const SinglePost = (props) => {
           <CenteredEditModal
               show={modalShow}
               post={props.post}
+              fetch={props.fetch}
               onHide={() => setModalShow(false)}
             />
           {props.post.user._id===curent_userId ? <Dropdown.Item  onClick={() => DeletePost(props.post._id)}>Delete</Dropdown.Item>: <></>}
@@ -200,6 +202,7 @@ const SinglePost = (props) => {
               show={EditCommentmodalShow}
               comment={c}
               post={props.post}
+              fetch={props.fetch}
               onHide={() => setModalShow(false)}
             />
               <Dropdown.Item  onClick={() => DeleteComment(props.post._id, c._id)}>Delete Comment</Dropdown.Item>
