@@ -56,9 +56,8 @@ const AddForm = () => {
       );
       if (postExp.ok) {
         expId = await postExp.json()
-        alert("Experience added !");
         setTimeout(function() {
-          window.location.replace('/');
+          window.location.replace('/me');
         }, 500);
       }
 
