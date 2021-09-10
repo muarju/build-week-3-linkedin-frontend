@@ -48,8 +48,7 @@ const SinglePost = (props) => {
     })
     if(response){
       props.fetch()
-
-     
+      
     }else{
       console.log("something wrong")
     }
@@ -126,6 +125,7 @@ const SinglePost = (props) => {
           {props.post.user._id===curent_userId ? <Dropdown.Item  onClick={() => setModalShow(true)}>Edit Post</Dropdown.Item>: <></>}
           <CenteredEditModal
               show={modalShow}
+              setModalShow={setModalShow}
               post={props.post}
               fetch={props.fetch}
               onHide={() => setModalShow(false)}
@@ -200,6 +200,7 @@ const SinglePost = (props) => {
               <Dropdown.Item onClick={() => setEditCommentmodalShow(true)}>Edit Comment</Dropdown.Item>
               <EditCommentModal
               show={EditCommentmodalShow}
+              setModalShow={setModalShow}
               comment={c}
               post={props.post}
               fetch={props.fetch}

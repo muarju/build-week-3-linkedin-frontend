@@ -27,6 +27,7 @@ const NewPost = (props) => {
             />
             <CenteredModal
               show={modalShow}
+              setModalShow={setModalShow}
               fetch={props.fetch}
               onHide={() => setModalShow(false)}
             />

@@ -7,7 +7,7 @@ import { VscTriangleDown } from "react-icons/vsc";
 import { IoDocumentTextSharp } from "react-icons/io5";
 import { GiShinyIris } from "react-icons/gi";
 import { IoBagRemove } from "react-icons/io5";
-import { FaPoll } from "react-icons/fa";
+import { FaPlusSquare, FaPoll } from "react-icons/fa";
 import { BsThreeDots } from "react-icons/bs";
 import { HiOutlinePhotograph } from "react-icons/hi";
 import { AiFillPlaySquare } from "react-icons/ai";
@@ -25,7 +25,11 @@ const CenteredModal = (props) => {
   const surname=localStorage.getItem('surname');
   let formData=null;
   let postId=null
+
+
   const [modalShow, setModalShow] = useState(false);
+
+
   const [post, setPost] = useState({
     text: "",
     username:`${username}`,
@@ -51,6 +55,7 @@ const CenteredModal = (props) => {
         let resp = await response.json()
         postId=resp._id
         console.log('post added')
+
       } else {
         alert("Something WRONG!");
       }
@@ -74,6 +79,7 @@ const CenteredModal = (props) => {
         }
       }
       props.fetch()
+      props.setModalShow(false)
       
       
 
@@ -87,7 +93,9 @@ const CenteredModal = (props) => {
 
   return (
     <Modal
-      {...props}
+    show={props.show}
+    onHide={props.onHide}
+      // {...props}
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
@@ -155,6 +163,7 @@ const CenteredModal = (props) => {
             <Button
               type="submit"
               className="rounded-pill"
+              
             >
               Post
             </Button>

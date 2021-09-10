@@ -74,7 +74,7 @@ const CenteredEditModal = (props) => {
         }
       }
       props.fetch()
-      
+      props.setModalShow(false)
       
 
     } catch (error) {
@@ -87,7 +87,8 @@ const CenteredEditModal = (props) => {
 
   return (
     <Modal
-      {...props}
+      show={props.show}
+      onHide={props.onHide}
       size="md"
       aria-labelledby="contained-modal-title-vcenter"
       centered
