@@ -38,7 +38,7 @@ const MainSection = (props) => {
       console.log(error);
     }
   };
-
+  
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -116,9 +116,9 @@ const MainSection = (props) => {
                   <button className="btn btn-outline-secondary rounded-pill mb-2">
                     Add section
                   </button>
-                  <button className="btn btn-outline-secondary rounded-pill mb-2">
-                    More
-                  </button>
+                  <a href={`${process.env.REACT_APP_API_URL}/profile/${id}/cv`} className="btn btn-outline-secondary rounded-pill mb-2">
+                   Donwload Resume
+                  </a>
                 </div>
               </Card.Body>
             </Card>
