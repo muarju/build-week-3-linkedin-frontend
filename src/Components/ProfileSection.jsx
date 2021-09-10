@@ -13,6 +13,7 @@ import Footer from './Footer';
 
 
 const ProfileSection = (props) => {
+  let profileId = props.match.params.id
   const [profileData, setProfileData] = useState(null)
   const [validProfile, setValidProfile] = useState()
   const [loading, setLoading] = useState(true)
@@ -25,7 +26,7 @@ const ProfileSection = (props) => {
   }, [])
 
   const fetchData = async () => {
-    let profileId = props.match.params.id
+   
     try {
       let response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${profileId}`, {
         headers: {
@@ -123,9 +124,9 @@ const ProfileSection = (props) => {
                     <button className="btn btn-outline-secondary rounded-pill mb-2">
                       Message
                     </button>
-                    <button className="btn btn-outline-secondary rounded-pill mb-2">
-                      More
-                    </button>
+                    <a href={`${process.env.REACT_APP_API_URL}/profile/${profileId}/cv`} target="_blank" className="btn btn-outline-secondary rounded-pill mb-2">
+                   Donwload Resume
+                  </a>
                   </div>
                 </Card.Body>
               </Card>

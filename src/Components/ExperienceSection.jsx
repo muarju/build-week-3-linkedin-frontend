@@ -48,7 +48,10 @@ export default function ExperienceSection(props) {
       <div>
         <Card.Body>
           <div className="profile-section-header-container">
-            <h5 className="profile-body-section-title my-2">Experience</h5>
+            <h5 className="profile-body-section-title my-2 mr-auto">Experience</h5>
+            <a href={`${process.env.REACT_APP_API_URL}/profile/${username}/csv`} target="_blank" className="btn btn-outline-secondary rounded-pill mb-2">
+                   Donwload CSV
+            </a>
             { 
               !props.params?
               <AddDataButton  fetch={fetchExperiences}/> : <> </>

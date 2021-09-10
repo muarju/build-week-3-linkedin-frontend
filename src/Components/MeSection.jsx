@@ -116,7 +116,7 @@ const MainSection = (props) => {
                   <button className="btn btn-outline-secondary rounded-pill mb-2">
                     Add section
                   </button>
-                  <a href={`${process.env.REACT_APP_API_URL}/profile/${id}/cv`} className="btn btn-outline-secondary rounded-pill mb-2">
+                  <a href={`${process.env.REACT_APP_API_URL}/profile/${id}/cv`} target="_blank" className="btn btn-outline-secondary rounded-pill mb-2">
                    Donwload Resume
                   </a>
                 </div>
