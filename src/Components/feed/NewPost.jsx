@@ -6,7 +6,8 @@ import { HiOutlinePhotograph } from "react-icons/hi";
 import { AiFillPlaySquare } from "react-icons/ai";
 import { RiCalendarEventFill } from "react-icons/ri";
 import { RiArticleLine } from "react-icons/ri";
-const NewPost = () => {
+
+const NewPost = (props) => {
   const [modalShow, setModalShow] = useState(false);
   const avatar= localStorage.getItem('avatar');
 
@@ -26,6 +27,7 @@ const NewPost = () => {
             />
             <CenteredModal
               show={modalShow}
+              fetch={props.fetch}
               onHide={() => setModalShow(false)}
             />
           </div>

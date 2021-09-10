@@ -32,9 +32,8 @@ const accesstoken=localStorage.getItem('accesstoken');
       } else {
         alert("Something WRONG!");
       }
-      setTimeout(function() {
-        window.location.replace('/');
-      }, 500);
+      props.fetch()
+    
       
 
     } catch (error) {
