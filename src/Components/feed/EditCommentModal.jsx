@@ -33,7 +33,7 @@ const accesstoken=localStorage.getItem('accesstoken');
         alert("Something WRONG!");
       }
       props.fetch()
-    
+      props.onHide()
       
 
     } catch (error) {

@@ -30,9 +30,7 @@ const SinglePost = (props) => {
     })
     if(response){
       console.log('like',response.data)
-      setTimeout(function() {
-        window.location.replace('/');
-      }, 500);
+      props.fetch()
     }else{
       console.log("something wrong")
     }
@@ -48,7 +46,7 @@ const SinglePost = (props) => {
     })
     if(response){
       props.fetch()
-      
+      setComment({comment:""})
     }else{
       console.log("something wrong")
     }
@@ -175,7 +173,33 @@ const SinglePost = (props) => {
 
         <Row>
           <Col className={showComment ? "post-comment-area" : "d-none"}>
-          {props.post.Comments.map(c => 
+            <Row className="d-flex">
+              <div className="post-comment-img">
+                <img
+                  src={avatar}
+                  style={{height: "40px", marginTop: "5px"}}
+                  alt="profile-picture"
+                  className="rounded-circle"
+                />
+              </div>
+              <div className="post-textarea">
+               <Form onSubmit={(e,postId )=> onSubmit(e,props.post._id)}>
+               <Form.Group
+                    className="mb-2 mt-2 pr-2"
+                    controlId="exampleForm.ControlTextarea1"
+                  >
+                    <Form.Control
+                      type="text"
+                      name="comment"
+                      value={comment.comment}
+                      className="w-100"
+                      onChange={e => onInputChange(e)}
+                    />
+                </Form.Group>
+               </Form>
+              </div>
+            </Row>
+            {props.post.Comments.sort((a,b) => a.createdAt <  b.createdAt? 1 : -1).map(c => 
              <Row className="d-flex justify-content-between">
              <div className="post-comment-img">
                <img
@@ -200,11 +224,10 @@ const SinglePost = (props) => {
               <Dropdown.Item onClick={() => setEditCommentmodalShow(true)}>Edit Comment</Dropdown.Item>
               <EditCommentModal
               show={EditCommentmodalShow}
-              setModalShow={setModalShow}
               comment={c}
               post={props.post}
               fetch={props.fetch}
-              onHide={() => setModalShow(false)}
+              onHide={() => setEditCommentmodalShow(false)}
             />
               <Dropdown.Item  onClick={() => DeleteComment(props.post._id, c._id)}>Delete Comment</Dropdown.Item>
               </Dropdown.Menu>
@@ -214,33 +237,6 @@ const SinglePost = (props) => {
            </Row>
             
             )}
-
-            <Row className="d-flex">
-              <div className="post-comment-img">
-                <img
-                  src={avatar}
-                  style={{height: "40px", marginTop: "5px"}}
-                  alt="profile-picture"
-                  className="rounded-circle"
-                />
-              </div>
-              <div className="post-textarea">
-               <Form onSubmit={(e,postId )=> onSubmit(e,props.post._id)}>
-               <Form.Group
-                    className="mb-2 mt-2 pr-2"
-                    controlId="exampleForm.ControlTextarea1"
-                  >
-                    <Form.Control
-                      type="text"
-                      name="comment"
-                      defaultValue={comment.comment}
-                      className="w-100"
-                      onChange={e => onInputChange(e)}
-                    />
-                </Form.Group>
-               </Form>
-              </div>
-            </Row>
           </Col>
         </Row>
       </Card.Body>
