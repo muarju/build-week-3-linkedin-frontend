@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-// import { FaLessThan } from "react-icons/fa";
 import UploadImage from "./UploadImage";
 
-const AddForm = () => {
+const AddForm = (props) => {
 
   const [working, setWorking] = useState(false)
   const [headline, setHeadline] = useState(false)
@@ -56,41 +55,41 @@ const AddForm = () => {
       );
       if (postExp.ok) {
         expId = await postExp.json()
-        setTimeout(function() {
-          window.location.replace('/me');
-        }, 500);
+        props.fetch()
       }
 
 
       if (image) {
         formData = new FormData()
         formData.append("image", image)
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}/image`, {
+          method: "PUT",
+          body: formData,
+          headers: {
+            'authentication': `${accesstoken}`
+          },
+          
+        })
+        
+        if (response.ok) {
+          props.fetch()
+        }
       }
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}/image`, {
-        method: "PUT",
-        body: formData,
-        headers: {
-          'authentication': `${accesstoken}`
-        },
-        
-      })
-      
-      if (response.ok) {
-        setTimeout(function() {
-          window.location.replace('/');
-        }, 500);
-      }
     } catch (error) {
       console.log(error);
     }
+
   };
 
   return (
     <>
       <Form
         className="container-form d-flex flex-column align-items-center"
-        onSubmit={(e) => Fetch(e)}
+        onSubmit={(e) => {
+          Fetch(e)
+          props.onHide()
+        }}
       >
         <Form.Group className="w-100">
           <Form.Label>Title *</Form.Label>

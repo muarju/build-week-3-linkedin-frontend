@@ -3,20 +3,24 @@ import { useState } from "react";
 import { AiOutlineEye } from "react-icons/ai";
 import { BiPhotoAlbum } from 'react-icons/bi'
 import { RiDeleteBin5Line } from 'react-icons/ri'
-import ProfileImageUpload from "./ProfileImageUpload";
 import { MdModeEdit } from 'react-icons/md'
+import ProfileImageUpload from "./ProfileImageUpload";
 
 const ProfileImage = (props) => {
   const [lgShow, setLgShow] = useState(false);
-
+  console.log('profileImage', props);
   return (
     <>
-      <img
-        src={props.profileData.image}
-        alt="#"
-        className="profile-pic rounded-circle"
-        onClick={() => setLgShow(true)}
-      />
+      {
+        props.params ?
+          <img src={props.profileData.image} alt="profilePic" className="profile-pic rounded-circle" /> :
+          <img
+            src={props.profileData.image}
+            alt="#"
+            className="profile-pic rounded-circle"
+            onClick={() => setLgShow(true)}
+          />
+      }
       <Modal
         size="lg"
         show={lgShow}
@@ -44,22 +48,22 @@ const ProfileImage = (props) => {
           </Button>
         </Modal.Body>
         <Modal.Footer className="modal-bg justify-content-between">
-            <Row className='mx-0 my-0'>
-            
+          <Row className='mx-0 my-0'>
+
             <Col className="flex-column mb-0 modal-edit col-1 d-flex first-svg align-items-center justify-content-center" >
               <MdModeEdit className="mb-1 ml-1" size="1x" />
               <span className="mb-0 text-white footer-span ml-1">Edit</span>
             </Col>
-            <ProfileImageUpload profileData={props.profileData} fetch={props.fetch}/>
+            <ProfileImageUpload profileData={props.profileData} fetch={props.fetch} />
             <Col className="flex-column mb-0 modal-edit col-3 d-flex second-svg  justify-content-center mr-auto">
-            <BiPhotoAlbum className="mb-1 ml-1 mt-1" size="1x"/>
-            <span className="mb-0 text-white footer-span ml-1">Frames</span>
+              <BiPhotoAlbum className="mb-1 ml-1 mt-1" size="1x" />
+              <span className="mb-0 text-white footer-span ml-1">Frames</span>
             </Col>
             <Col className="flex-column mb-0 modal-edit col-3 d-flex second-svg  justify-content-center align-items-end">
-            <RiDeleteBin5Line className="mb-1 ml-1 mt-1" size="1x"/>
-            <span className="mb-0 text-white footer-span ml-1">Delete</span>
+              <RiDeleteBin5Line className="mb-1 ml-1 mt-1" size="1x" />
+              <span className="mb-0 text-white footer-span ml-1">Delete</span>
             </Col>
-            </Row>
+          </Row>
         </Modal.Footer>
       </Modal>
     </>
@@ -68,4 +72,4 @@ const ProfileImage = (props) => {
 
 export default ProfileImage;
 
-//rgba(0, 0, 0, 0.9)
+

@@ -1,6 +1,7 @@
+// import { database } from "faker";
+// import { AiOutlinePlus } from 'react-icons/ai'
 import { useRef, useState } from "react";
 import { Form, Row, Col, Button } from "react-bootstrap";
-import { AiOutlinePlus } from 'react-icons/ai'
 import UploadImage from "./UploadImage";
 
 const AddForm = (props) => {
@@ -9,19 +10,21 @@ const AddForm = (props) => {
   const [image, setImage] = useState(null)
 
   const input = useRef()
-  const onHideFunction = props.onHide
-  const onUpdateFunction = props.onUpdate
   const username = localStorage.getItem('username');
   const accesstoken = localStorage.getItem('accesstoken');
   const expId = props.expData._id
   const expData = props.expData
   let formData = null
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" }
+    return new Date(dateString).toLocaleDateString(undefined, options)
+  }
+
+
 
   const submitData = async (e) => {
     e.preventDefault()
-
-
 
     try {
       let response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}`, {
@@ -33,8 +36,7 @@ const AddForm = (props) => {
         }
       })
       if (response.ok) {
-        onHideFunction()
-        onUpdateFunction()
+        props.fetch()
       }
       else {
         console.log(response.status)
@@ -43,21 +45,18 @@ const AddForm = (props) => {
       if (image) {
         formData = new FormData()
         formData.append("image", image)
-
+        const imageResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}/image`, {
+          method: "PUT",
+          body: formData,
+          headers: {
+            'authentication': `${accesstoken}`
+          },
+        })
+        if (imageResponse.ok) {
+          props.fetch()
+        }
       }
 
-      const imageResponse = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}/image`, {
-        method: "PUT",
-        body: formData,
-        headers: {
-          'authentication': `${accesstoken}`
-        },
-
-      })
-
-      if (imageResponse.ok) {
-
-      }
     } catch (error) {
       console.log(error)
     }
@@ -74,10 +73,8 @@ const AddForm = (props) => {
         }
       });
       if (response.ok) {
-        onHideFunction()
-        setTimeout(function() {
-          window.location.replace('/me');
-        }, 500);
+        props.fetch()
+        props.onHide()
       }
       else {
         console.log(response.status)
@@ -94,7 +91,10 @@ const AddForm = (props) => {
 
       <Form
         className="container-form d-flex flex-column align-items-center"
-        onSubmit={(e) => this.Fetch(e)}
+        onSubmit={(e) => {
+          submitData(e)
+        props.onHide()
+        }}
       >
         <Form.Group className="w-100">
           <Form.Label>Title *</Form.Label>
@@ -112,10 +112,6 @@ const AddForm = (props) => {
           <Form.Label>Employment type</Form.Label> <br />
           <select
             className="w-100"
-          //value={this.state.form.employmentType}
-          /*onChange={(e) => {
-            this.HandleInput("employmentType", e.target.value);
-          }}*/
           >
             <option>-</option>
             <option>Full-time</option>
@@ -148,9 +144,7 @@ const AddForm = (props) => {
             type="text"
             placeholder="Ex. London, United Kingdom"
             defaultValue={expData.area}
-            onChange={(e) => {
-              expData.area = e.target.value
-            }}
+            onChange={e => expData.area = e.target.value}
           />
         </Form.Group>
 
@@ -169,19 +163,8 @@ const AddForm = (props) => {
             <Form.Group className="mb-3" controlId="formBasicCheckbox">
               <Form.Label>Start Date *</Form.Label> <br />
               <select
-                value={expData.startDate}
-                /*onChange={(e) => {
-                  this.setState({
-                    ...this.state,
-                    form: {
-                      ...this.state.form,
-                      start: {
-                        ...this.state.form.start,
-                        month: e.target.value,
-                      },
-                    },
-                  });
-                }}*/
+                value={formatDate(expData.startDate).split(" ")[1]}
+                onChange={(e) => expData.startDate = e.target.value}
                 className="start"
               >
                 <option>Month</option>
@@ -199,19 +182,8 @@ const AddForm = (props) => {
                 <option>December</option>
               </select>
               <select
-                value={expData.startDate}
-                /*onChange={(e) => {
-                  this.setState({
-                    ...this.state,
-                    form: {
-                      ...this.state.form,
-                      start: {
-                        ...this.state.form.start,
-                        year: e.target.value,
-                      },
-                    },
-                  });
-                }}*/
+                value={formatDate(expData.startDate).split(" ")[2]}
+                onChange={(e) => expData.startDate = e.target.value }
                 className="start"
               >
                 <option>Year</option>
@@ -248,19 +220,7 @@ const AddForm = (props) => {
               ) : (
                 <>
                   <select
-                    value={expData.endDate}
-                    /*onChange={(e) => {
-                      this.setState({
-                        ...this.state,
-                        form: {
-                          ...this.state.form,
-                          end: {
-                            ...this.state.form.end,
-                            month: e.target.value,
-                          },
-                        },
-                      });
-                    }}*/
+                    value={formatDate(expData.endDate).split(" ")[1]}
                     className="end"
                   >
                     <option>Month</option>
@@ -278,19 +238,7 @@ const AddForm = (props) => {
                     <option>December</option>
                   </select>
                   <select
-                    value={expData.endDate}
-                    /*onChange={(e) => {
-                      this.setState({
-                        ...this.state,
-                        form: {
-                          ...this.state.form,
-                          end: {
-                            ...this.state.form.end,
-                            year: e.target.value,
-                          },
-                        },
-                      });
-                    }}*/
+                    value={formatDate(expData.endDate).split(" ")[2]}
                     className="end"
                   >
                     <option>Year</option>
@@ -347,25 +295,9 @@ const AddForm = (props) => {
           <Form.Check
             type="checkbox"
             label="Update my headline"
-          /*onClick={() => {
-            this.setState({
-              ...this.state,
-              headline: !this.state.headline,
-            });
-          }}*/
           />
         </Form.Group>
 
-        {/*<Form.Group className={this.state.headline ? "w-100" : "d-none"}>
-            <Form.Label>Headline *</Form.Label>
-            <Form.Control
-              type="text"
-              defaultValue={expData.description}
-              onChange={(e) => {
-                this.HandleInput("headline", e.target.value);
-              }}
-            />
-          </Form.Group>*/}
 
         <Form.Group
           className="mb-3 w-100"
@@ -390,7 +322,7 @@ const AddForm = (props) => {
         </Form.Group>
         <Form.Group className='w-100 d-flex justify-content-between'>
           <Button className='del-exp-button btn-light' type="submit" onClick={(e) => deleteData(e)}>Delete Experience</Button>
-          <Button className='edit-exp-button' type="submit" onClick={(e) => submitData(e)}>Save</Button>
+          <Button className='edit-exp-button' type="submit" >Save</Button>
         </Form.Group>
       </Form>
     </>

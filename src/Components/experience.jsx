@@ -1,5 +1,4 @@
 import React from "react";
-import faker from "faker";
 import EditDataButton from "./EditDataButton";
 
 export default function Experience(props) {
@@ -10,8 +9,6 @@ export default function Experience(props) {
   }
 
   const convertDateToString = (start, end) => {
-    console.log(start);
-    console.log(end);
     if (end === null) {
       return start + " - Present";
     } else {
@@ -26,21 +23,21 @@ export default function Experience(props) {
           <img
             className="experience-fragment-image"
             src={props.experienceData.image}
-            alt=""
+            alt="frament-image"
           />
         </div>
 
-        <div className="px-3 experience-fragment-details">
+        <div className="pl-3 experience-fragment-details">
           <div className="experience-fragment-header">
             <h6 className="fw-400 experience-fragment-title">
               {props.experienceData.role}
             </h6>
             <div className="experience-fragment-edit-container">
-              {<EditDataButton
+              { !props.params && <EditDataButton
                 experience={props.experienceData}
                 username={props.username}
                 expId={props.experienceData._id} 
-                onUpdate = {props.onUpdate}
+                fetch={props.fetch}
                 />}
             </div>
           </div>

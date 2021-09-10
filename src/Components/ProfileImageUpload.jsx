@@ -8,18 +8,19 @@ const ProfileImageUpload = (props) => {
 const input = useRef()
 const fileUpload = async (e) => {
     try {
+
+      const accesstoken = localStorage.getItem('accesstoken');
+      const userId = localStorage.getItem('id');
       const file = e.target.files[0];
       const formData = new FormData();
-      formData.append("profile", file);
-      console.log(formData)
-      const userId = process.env.REACT_APP_API_USER;
-      const response = await fetch(
-        `https://striveschool-api.herokuapp.com/api/profile/${userId}/picture`,
+      formData.append("profileImage", file);
+
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${userId}/picture`,
         {
-          method: "POST",
+          method: "PUT",
           body: formData,
           headers: {
-            Authorization : `Bearer ${process.env.REACT_APP_API_KEY}`
+            'authentication': `${accesstoken}`
         }
         }
       );

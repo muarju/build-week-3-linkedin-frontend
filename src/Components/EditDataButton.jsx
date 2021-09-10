@@ -43,6 +43,7 @@ export default function EditDataButton(props) {
       <VscEdit
         className="icons experience-fragment-edit-button"
         onClick={handleShow}
+        id="editbutton"
       ></VscEdit>
       <Modal
         {...props}
@@ -58,7 +59,7 @@ export default function EditDataButton(props) {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {expData && <EditForm expData={expData} onUpdate={props.onUpdate} onHide={() => setShow(false)}/>}
+          {expData && <EditForm expData={expData} onUpdate={props.onUpdate} onHide={handleClose} fetch = {props.fetch}/>}
         </Modal.Body>
       </Modal>
     </>
