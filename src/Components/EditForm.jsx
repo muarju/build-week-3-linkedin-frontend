@@ -1,7 +1,7 @@
 // import { database } from "faker";
 // import { AiOutlinePlus } from 'react-icons/ai'
 import { useRef, useState } from "react";
-import { Form, Row, Col, Button } from "react-bootstrap";
+import { Form, Row, Col, Button, Image } from "react-bootstrap";
 import UploadImage from "./UploadImage";
 
 const AddForm = (props) => {
@@ -28,7 +28,7 @@ const AddForm = (props) => {
 
     try {
       let response = await fetch(`${process.env.REACT_APP_API_URL}/profile/${username}/experiences/${expId}`, {
-        body: JSON.stringify(expData),
+        body: JSON.stringify({ ...expData, image: expData.Image }),
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -93,7 +93,7 @@ const AddForm = (props) => {
         className="container-form d-flex flex-column align-items-center"
         onSubmit={(e) => {
           submitData(e)
-        props.onHide()
+          props.onHide()
         }}
       >
         <Form.Group className="w-100">
@@ -164,7 +164,7 @@ const AddForm = (props) => {
               <Form.Label>Start Date *</Form.Label> <br />
               <select
                 value={formatDate(expData.startDate).split(" ")[1]}
-                onChange={(e) => expData.startDate = e.target.value}
+                onChange={(e) => expData.startDate = new Date(e.target.value)}
                 className="start"
               >
                 <option>Month</option>
@@ -183,7 +183,7 @@ const AddForm = (props) => {
               </select>
               <select
                 value={formatDate(expData.startDate).split(" ")[2]}
-                onChange={(e) => expData.startDate = e.target.value }
+                onChange={(e) => expData.startDate = e.target.value}
                 className="start"
               >
                 <option>Year</option>
@@ -221,6 +221,7 @@ const AddForm = (props) => {
                 <>
                   <select
                     value={formatDate(expData.endDate).split(" ")[1]}
+                    onChange={(e) => expData.endDate = e.target.value}
                     className="end"
                   >
                     <option>Month</option>
@@ -239,6 +240,7 @@ const AddForm = (props) => {
                   </select>
                   <select
                     value={formatDate(expData.endDate).split(" ")[2]}
+                    onChange={(e) => expData.endDate = e.target.value}
                     className="end"
                   >
                     <option>Year</option>

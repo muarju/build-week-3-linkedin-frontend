@@ -29,6 +29,7 @@ export default function ExperienceSection(props) {
       });
       const data = await fetchExp.json();
       setExperiences(data);
+      console.log(data);
     } catch (err) {
       console.log(err);
     }
