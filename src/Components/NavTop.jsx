@@ -4,20 +4,35 @@ import { Container, Row, Col, Button, Image } from "react-bootstrap";
 import "../second-nav.css";
 
 const NavTop = () => {
-  const [scrolled,setScrolled]=useState(false);
-  const handleScroll=() => {
-      const offset=window.scrollY;
-      if(offset > 200 ){
-        setScrolled(true);
-      }
-      else{
-        setScrolled(false);
-      }
-    }
-  
-    useEffect(() => {
-      window.addEventListener('scroll',handleScroll)
+  const [scrolled, setScrolled] = useState(false);
+  const [data, setData] = useState(null)
+  let id = localStorage.getItem('id');
+  let accesstoken = localStorage.getItem('accesstoken');
+  const endpoint = `${process.env.REACT_APP_API_URL}/profile/${id}`
+
+  const fetchData = async () => {
+    const response = await fetch(endpoint, {
+      headers: { 'authentication': `${accesstoken}` }
     })
+    const data = await response.json()
+    setData(data)
+  }
+
+  const handleScroll = () => {
+    const offset = window.scrollY;
+    if (offset > 200) {
+      setScrolled(true);
+    }
+    else {
+      setScrolled(false);
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+    fetchData()
+
+  })
 
 
   return (
@@ -30,10 +45,10 @@ const NavTop = () => {
             style={{ height: "50px" }}
           >
             <Col href="#home" className="d-flex mr-5 mt-2">
-              <Image src="https://bit.ly/3zegycw" className="elon ml-0 mt-0" />
+              <Image src={data && data.image} className="elon ml-0 mt-0" />
               <Col>
-                <h3 className="" style={{fontSize:"16px", marginBottom:"0px"}}>Elon Musk</h3>
-                <p className="">CEO of Tesla Motors</p>
+                <h3 className="" style={{ fontSize: "16px", marginBottom: "0px" }}>{data && data.name + " " + data.surname}</h3>
+                <p className="">{data && data.title}</p>
               </Col>
             </Col>
 
