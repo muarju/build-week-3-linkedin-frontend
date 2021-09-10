@@ -141,7 +141,7 @@ const CenteredModal = (props) => {
               <input type="file" id="file" style={{display: "none"}}
                 onChange={e => setPostImage(e.target.files[0])}/>
                 <label htmlFor="file" >
-                    <HiOutlinePhotograph className="mr-2 icons" />
+                    <HiOutlinePhotograph className="mr-2 icons" style={{height:"20px",width:"20px"}} />
                 </label>
 
               <AiFillPlaySquare className="mr-2 icons" />

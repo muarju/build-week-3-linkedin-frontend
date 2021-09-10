@@ -9,6 +9,7 @@ import { RiArticleLine } from "react-icons/ri";
 const NewPost = () => {
   const [modalShow, setModalShow] = useState(false);
   const avatar= localStorage.getItem('avatar');
+
   return (
     <Row>
       <Card className="mt-2 w-100 mb-0 newPost">
