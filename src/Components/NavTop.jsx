@@ -14,7 +14,6 @@ const NavTop = () => {
         setScrolled(false);
       }
     }
-  
     useEffect(() => {
       window.addEventListener('scroll',handleScroll)
     })
