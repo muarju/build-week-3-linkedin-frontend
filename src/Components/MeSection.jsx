@@ -15,6 +15,7 @@ import faker from "faker";
 const MainSection = (props) => {
 
   const [profileData, setProfileData] = useState("");
+  const [experience, setExperience] = useState(null)
   const id = localStorage.getItem('id');
   const accesstoken = localStorage.getItem('accesstoken');
 
@@ -32,13 +33,20 @@ const MainSection = (props) => {
       if (response.ok) {
         let resp = await response.json();
         setProfileData(resp);
+        const fetchExp = await fetch(`${process.env.REACT_APP_API_URL}/profile/${resp.username}/experiences`, {
+          headers: {
+            authentication: `${accesstoken}`
+          },
+        })
+        const data = await fetchExp.json()
+        setExperience(data)
       } else {
       }
     } catch (error) {
       console.log(error);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -88,13 +96,13 @@ const MainSection = (props) => {
 
                   <Col className="col d-flex profile-company-images justify-content-center">
                     <ListGroup variant="flush" className="mt-3">
-                      <ListGroup.Item className='list-border'>
-                        <SiTesla className="svg-margin" />
-                        Tesla
+                      <ListGroup.Item className='list-border '>
+                        <img src={experience && experience[0].image} alt="icon" className="profileIcon" />
+                        {experience && experience[0].company}
                       </ListGroup.Item>
-                      <ListGroup.Item>
-                        <SiSpacex className="svg-margin" />
-                        SpaceX
+                      <ListGroup.Item className="list-border">
+                        <img src={experience && experience[1].image} alt="icon" className="profileIcon" />
+                         {experience && experience[1].company}
                       </ListGroup.Item>
                     </ListGroup>
                   </Col>
@@ -117,7 +125,7 @@ const MainSection = (props) => {
                     Add section
                   </button>
                   <a href={`${process.env.REACT_APP_API_URL}/profile/${id}/cv`} className="btn btn-outline-secondary rounded-pill mb-2">
-                   Donwload Resume
+                    Donwload Resume
                   </a>
                 </div>
               </Card.Body>

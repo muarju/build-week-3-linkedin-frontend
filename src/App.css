@@ -604,7 +604,7 @@ hr {
   box-shadow: none !important;
 }
 
-.profile-pic, .activity-image, .rounded-circle {
+.profile-pic, .activity-image, .rounded-circle, .user-icon, .elon {
   object-fit: cover;
 }
 
@@ -623,4 +623,7 @@ hr {
   background-color: rgba(192, 192, 192, 0.212);
 }
 
-
+.profileIcon {
+  width: 37px;
+  margin-right: 20px;
+}
